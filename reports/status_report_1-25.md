@@ -22,5 +22,16 @@ I would like to set up the basic skeleton for my part of the project and need to
 ### Muhammad Ammar
 
 ### Alex Hugli
-*unavailable*
+-Added to the living document use case #5 - the uploading of a web URL instead of a text document
+-Added to the living document a pros and cons list of using an SVM (support vector machine) vs. a neural network
+    for the job of classifying whether a document is machine-generated.
+-Got role of acquiring/generating data, as well as front and back end linking
 
+#### Previous Goals
+Get a concrete role and start describing features
+#### Progress
+-Living document updated with more use cases to better specify design. 
+-Got a more concrete role (data acquisition)
+#### New Goals
+-Find a file set of essays, or an easily-formatted database/repository of essays (perhaps dissertations?)
+-Utilize the GPT-3 API and design a routine that generates cheap, fairly complex machine-generated essays

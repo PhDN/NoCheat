@@ -22,5 +22,12 @@ I need to install the appropriate APIs and set up my Python environment within P
 ### Muhammad Ammar
 
 ### Alex Hugli
-*unavailable*
+-Retroactively became up to speed with the project goals, use cases, and high level design
+-Start role assigning
 
+#### Previous Goals
+N/A
+#### Progress
+Understood roles, tried to triage and assign work, definitely need to better determine what my role specifically will be
+#### New Goals
+Get a concrete role and start describing features

@@ -15,7 +15,19 @@ I need to install the appropriate APIs and set up my Python environment within P
 I created the .yml file and have read some of the doc for the Hugging Face API, which was the one I was completely unfamiliar with. I also helped to make a number of the changes to our Living Doc and adjust our plans. I think I did a better job at taking the initiative this week, but at the same time I am still not clear about my exact duties at the time of writing this.
 #### New Goals
 I would like to set up the basic skeleton for my part of the project and need to complete my portion of next week's assignment.
+
 ### Simon Struthers
+#### Previous Goals
+1. Figure out where and how to host our website in the cloud.
+2. Create a skeleton for the back-end code.
+
+#### Progress
+Barebones skeleton for the back-end has been written, along with instructions. Still need to determine where in the cloud to host the website, but GitHub appears to provide several templates to pick from.
+
+#### New Goals
+1. Figure out where and how to host our website in the cloud.
+2. Get started on React front-end & code.
+3. Make launching a local test server more convenient.
 
 ### Phuong Duy Nguyen
 

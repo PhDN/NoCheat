@@ -34,6 +34,19 @@ I worked on living document and determined which front-end and back-end architec
 
 ### Phuong Duy Nguyen
 
+#### Previous Goals
+    - N/A
+
+#### Progress
+    - Set up Git Repo for the project, added members as collaborators
+    - Worked on living document
+    - Identified academic papers and other news articles to understand what others have done previously in this problem
+    - Check out a project similar to ours goal to indentify their approach and how to differentiate our own
+
+#### New Goals
+    - Read up on the literature review paper on Detection of AI generated text to understand how to approach this problem
+    - Explore how to use the ChatGPT API in order automate text generation and pull results from ChatGPT
+
 ### Muhammad Ammar
 
 ### Alex Hugli

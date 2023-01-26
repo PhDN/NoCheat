@@ -19,6 +19,21 @@ I would like to set up the basic skeleton for my part of the project and need to
 
 ### Phuong Duy Nguyen
 
+#### Previous Goals
+    - Read up on the literature review paper on Detection of AI generated text to understand how to approach this problem
+    - Explore how to use the ChatGPT API in order automate text generation and pull results from ChatGPT
+
+#### Progress
+    - Finished reading the literature review paper on Detection of AI generated text
+    - Identified that we should use a simpler metric like text perplexity to simplify our ML model and have a working prototype first, but other metrics such as frequency based on Zip's laws, or inverse data frequency (TF-IDF), could also be used instead.
+    - An official ChatGPT API is not yet avaiable, but have found several existing solutions to interact with ChatGPT
+        - https://github.com/acheong08/ChatGPT
+        - https://github.com/waylaidwanderer/node-chatgpt-api
+
+#### New Goals
+    - Explore which ML based approaches can work for this problem, maybe there are non neural network approaches like SVM or k-means that could work.
+    
+
 ### Muhammad Ammar
 
 ### Alex Hugli

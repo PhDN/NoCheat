@@ -48,6 +48,12 @@ I worked on living document and determined which front-end and back-end architec
     - Explore how to use the ChatGPT API in order automate text generation and pull results from ChatGPT
 
 ### Muhammad Ammar
+#### Previous Goals
+Set up a git repo and decide on the tools we will be using.
+#### Progress
+I helped on the living document and came up with a use case for the project. I also attended all the meetings and had discussions so we are all on the same page and know what the goals are for the project.
+#### New Goals
+I need to install pycharm and anaconda. I want to be familiar with the openAI API that we will be using and have it generate essays and store them in a file.
 
 ### Alex Hugli
 -Retroactively became up to speed with the project goals, use cases, and high level design

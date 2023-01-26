@@ -47,6 +47,12 @@ Barebones skeleton for the back-end has been written, along with instructions. S
     
 
 ### Muhammad Ammar
+#### Previous Goals
+Install pycharm and anaconda and get familiar with APIs we will be using.
+#### Progress
+I installed all the required tools for the project and getting familiar with using openAI. I am trying to generate some essay that we can use to either compare the students essays with directly or use in a dataset depending on what path we take.
+#### New Goals
+Use openAI to create essays on a particular topic and store them in a text file.
 
 ### Alex Hugli
 -Added to the living document use case #5 - the uploading of a web URL instead of a text document

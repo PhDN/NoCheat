@@ -1,4 +1,4 @@
-# Status Report 1/18
+# Status Report 1/25
 ## Team Report
 #### Previous Goals
 We all need to set up our programming environments, and gain familiarity with any APIs that we have not used before. We also need to populate our repo with the basic instructions and info corresponding to our setup and finish the Git assignment.

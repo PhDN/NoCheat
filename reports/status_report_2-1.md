@@ -5,10 +5,9 @@
 ## Individual Reports
 
 ### Alex Hugli
--Added to the living document use case #5 - the uploading of a web URL instead of a text document
--Added to the living document a pros and cons list of using an SVM (support vector machine) vs. a neural network
-    for the job of classifying whether a document is machine-generated.
 -Got role of acquiring/generating data, as well as front and back end linking
+-Found data set (1.7mn)
+-Got API access and figured out formats to be used in training (txt, pdf)
 
 #### Previous Goals
 -Find a file set of essays, or an easily-formatted database/repository of essays (perhaps dissertations?)

@@ -1,0 +1,16 @@
+{
+    "plugins": [],
+    "recurseDepth": 10,
+    "opts": {
+        "recurse": true,
+        "destination": "./docs"
+    },
+    "source": {
+        "include": ["src"],
+        "excludePattern": "node_modules"
+    },
+    "templates": {
+        "cleverLinks": false,
+        "monospaceLinks": false
+    }
+}

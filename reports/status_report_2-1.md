@@ -1,8 +1,21 @@
 # Status Report 2/1
 ## Team Report
 #### Previous Goals
+We must add three new sections to the Living Doc as part of next weeks assignment. To do that we need to finalize our plans with the software architecture and establish coding guidelines. Additionally, we would like to have a basic data set for cursory tests collected. 
+#### Progress
+We added the sections to the Living Doc and submitted the assignment. We also at least have a lead towards the data sets we will be using.
+#### New Goals
+We want to finish setting up the basic framework of our project and begin working on the testing and CI elements of the project.
 
 ## Individual Reports
+
+### Dylan Frohberg
+#### Previous Goals
+I would like to set up the basic skeleton for my part of the project and need to complete my portion of this week's assignment.
+#### Progress
+I finished a good chunk of the this week's assignment, particularly the software architecture and design sections. However, I came down with something Saturday evening that has persisted through the week and did not make as much progress on the backend as I desired. I was looking into feeding data from a text document into a Hugging Face pipeline, but I was only partially done with that and have not committed anything.
+#### New Goals
+I need to finish my implementation of the basics of the NLP set up and start working on the testing suite.
 
 ### Alex Hugli
 -Got role of acquiring/generating data, as well as front and back end linking

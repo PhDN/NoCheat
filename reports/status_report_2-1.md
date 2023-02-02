@@ -63,3 +63,19 @@ I need to finish my implementation of the basics of the NLP set up and start wor
     - Finish the implementation for text perplexity and bursiness calculation
     - Discuss and finalize chosen ML model for the project
     - Get started on implementing the chosen ML model (reimplemtation of existing model or integration using an API).
+
+### Simon Struthers
+
+#### Previous Goals
+1. Figure out where and how to host our website in the cloud.
+2. Get started on React front-end & code.
+3. Make launching a local test server more convenient.
+
+#### Progress
+- Got started with document submission form
+- Created utility hook to store user's progress and view prior requests/inquiries between site visits.
+
+#### New Goals
+1. Create adequate styling for UI elements
+2. Create manual document submission form
+3. Prototype in-progress and completed submission list

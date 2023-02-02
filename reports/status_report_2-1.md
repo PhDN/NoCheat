@@ -42,3 +42,24 @@ I need to finish my implementation of the basics of the NLP set up and start wor
     1. Get a fully functional setup going where I can run a program and generate text to an archivable file
     2. Test several hundred iterations and build the archive of machine-generated documents
 -Pay GPT-3 Playground bill
+
+### Phuong Duy Nguyen
+
+#### Previous Goals
+    - Explore which ML based approaches can work for this problem, maybe there are non neural network approaches like SVM or k-means that could work.
+
+#### Progress
+    - Contributed to this week's assignment and Living Document:
+        - Detailed risks and assement of risks
+        - Added Coding Guidelines
+        - Reorganized Living document to update to new assignment
+    - Determined that 
+    - Started a Google Colab to implement text perplexity and bursiness calculation
+    - Explored various ML models that can fit the project:
+        - OpenAI's Roberta base model to detect GPT-2's output, can be found on HuggingFace
+        - Using the Giant Language model Test Room (GLTR) tool
+
+#### New Goals
+    - Finish the implementation for text perplexity and bursiness calculation
+    - Discuss and finalize chosen ML model for the project
+    - Get started on implementing the chosen ML model (reimplemtation of existing model or integration using an API).

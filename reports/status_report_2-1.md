@@ -79,3 +79,15 @@ I need to finish my implementation of the basics of the NLP set up and start wor
 1. Create adequate styling for UI elements
 2. Create manual document submission form
 3. Prototype in-progress and completed submission list
+
+### Muhammad Ammar
+
+#### Previous Goals
+
+Familiarize myself with openAI and huggingface APIs and use them to request essays.
+
+### Progress
+I was able to generate essays through openAI API and learnt to use inference API from hugginface if we need to use a model from there.
+
+### New Goals
+Think of ways to compare AI generated and human written essays. We will need some factors and reward system to compare two essays and find similarities in them.

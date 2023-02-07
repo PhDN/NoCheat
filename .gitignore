@@ -3,3 +3,4 @@
 src/front/build/
 *.log
 .idea/
+.pytest_cache/

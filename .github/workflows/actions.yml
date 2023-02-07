@@ -12,8 +12,8 @@ jobs:
         uses: actions/setup-node@v2
         with:
           node-version: 18.x
-      - name: node ci, build, and test
+      - name: node install, build, and test
         run: |
-          npm --prefix src/front ci
+          npm --prefix src/front install
           npm --prefix src/front run build --if-present
           npm --prefix src/front test

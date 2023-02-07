@@ -13,8 +13,7 @@ jobs:
         with:
           node-version: 18.x
       - name: node install, build, and test
-        working-directory: ${GITHUB_WORKSPACE}/src/front
         run: |
-          npm install
-          npm run build --if-present
-          npm test
+          npm --prefix ${GITHUB_WORKSPACE}/src/front install
+          npm --prefix ${GITHUB_WORKSPACE}/src/front run build --if-present
+          npm --prefix ${GITHUB_WORKSPACE}/src/front test

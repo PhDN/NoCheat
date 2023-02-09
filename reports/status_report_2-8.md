@@ -67,18 +67,17 @@ I need to add the controller and test to the README as well as finish implementi
 ### Simon Struthers
 
 #### Previous Goals
-1. Figure out where and how to host our website in the cloud.
-2. Get started on React front-end & code.
-3. Make launching a local test server more convenient.
-
-#### Progress
-- Got started with document submission form
-- Created utility hook to store user's progress and view prior requests/inquiries between site visits.
-
-#### New Goals
 1. Create adequate styling for UI elements
 2. Create manual document submission form
 3. Prototype in-progress and completed submission list
+
+#### Progress
+- PDF previews in document submission form
+- Started with submission list, but changes are not yet committed
+
+#### New Goals
+1. Finish document submission form
+2. Finish submission listings
 
 ### Muhammad Ammar
 

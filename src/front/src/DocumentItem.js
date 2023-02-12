@@ -1,15 +1,34 @@
+import {Document, Page, pdfjs} from 'react-pdf';
+
+import './DocumentItem.css';
+import del from './delete.svg';
+import edit from './edit.svg';
+
+pdfjs.GlobalWorkerOptions.workerSrc= `//unpkg.com/pdfjs-dist@${pdfjs.version}/build/pdf.worker.min.js`;
+
+/** @type {(document: Blob) => boolean} */
+const isPdf = document => ['application/pdf', 'application/x-pdf'].includes(document.type);
+
 /**
- * @param {{ name: string; remove(): Promise<void>; }} props
+ * @param {{
+ *      name: string;
+ *      document: Blob;
+ *      remove(): Promise<void>;
+ *      openEditModal(): Promise<void>;
+ *  }} props
  */
-export default function DocumentItem({name, remove}) {
+export default function DocumentItem({ name, document, openEditModal, remove }) {
     return <div className="DocumentItem">
-        <span>{name}</span>
-        <button onClick={(event) => {
-            event.preventDefault();
-        }}>Edit</button>
-        <button onClick={(event) => {
-            event.preventDefault();
-            remove();
-        }}>Delete</button>
+        {isPdf(document) &&
+            <Document file={document} onLoadError={console.error.bind(console)}>
+                <Page pageNumber={1} width={224} renderAnnotationLayer={false} renderTextLayer={false} renderInteractiveForms={false} />
+            </Document>}
+        <div title={name}>{name}</div>
+        {isPdf(document) || <span className="edit" title="Edit" onClick={openEditModal}>
+            <img src={edit} alt="Edit" width={14} />
+        </span>}
+        <span className="del"  title="Delete" onClick={remove}>
+            <img src={del} alt="Del" width={14} />
+        </span>
     </div>;
 }

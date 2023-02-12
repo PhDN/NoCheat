@@ -68,6 +68,7 @@ import { useEffect, useState } from "react";
  * @typedef {{
  *  add(...documents: (Blob | string)[]): Promise<void>;
  *  clear(): Promise<void>;
+ *  get(id: number): Promise<DocumentStoreItem>;
  *  remove(id: number): Promise<void>;
  * }} DocumentStoreApi
  */
@@ -163,6 +164,11 @@ export default function useDocumentStore(storeName = 'documents') {
             if (!db) return;
             await promisifyIdbRequest(db.transaction([storeName], 'readwrite').objectStore(storeName).clear());
             setDocs([]);
+        },
+
+        get(id) {
+            if (!db) throw new Error('Document store not open');
+            return promisifyIdbRequest(db.transaction([storeName], 'readonly').objectStore(storeName).get(id));
         },
 
         async remove(id) {

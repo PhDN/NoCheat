@@ -1,0 +1,43 @@
+.DocumentItem > div {
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.DocumentItem > span {
+    position: absolute;
+    top: 16px;
+
+    display: block;
+    width: 24px;
+    height: 24px;
+    border-radius: 12px;
+    box-shadow: 2px 2px 4px -1px #0008;
+}
+.DocumentItem > span.edit {
+    background-color: #00ff00;
+    right: 48px;
+}
+.DocumentItem > span.del {
+    background-color: #ff0000;
+    right: 16px;
+}
+.DocumentItem > span > img {
+    display: block;
+    margin: auto;
+    margin-top: 5px;
+}
+
+.DocumentItem .react-pdf__Document {
+    display: flex;
+    justify-content: center;
+
+    flex-grow: 1;
+    margin-top: 8px;
+}
+
+.DocumentsForm.filled > .DocumentItem {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+}

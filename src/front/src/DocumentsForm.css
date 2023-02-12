@@ -1,4 +1,101 @@
 .DocumentsForm {
-    max-width: 1280px;
-    width: 90vw;
+    display: flex;
+    flex-wrap: wrap;
+
+    width: 80vw;
+    height: fit-content;
+    border-radius: 24px;
+
+    transition: height 0.25s ease, max-width 0.25s ease;
+}
+
+.DocumentsForm > label {
+    flex-grow: 1;
+    align-self: center;
+    text-align: left;
+    transition: background-color 0.25s ease;
+
+    cursor: pointer;
+
+    height: 1.25em;
+    padding: 16px;
+
+    background-color: #ffffff10;
+}
+.DocumentsForm > label:first-child {
+    border-bottom-left-radius: 24px;
+    border-top-left-radius: 24px;
+}
+.DocumentsForm > label:hover {
+    background-color: #ffffff20;
+}
+.DocumentsForm > input[type=file] {
+    display: none;
+}
+
+.DocumentsForm > .buttons > button {
+    all: unset;
+    flex-grow: 0;
+    transition: background-color 0.25s ease;
+}
+.DocumentsForm:not(.filled) > .buttons > button.add {
+    width: 64px;
+    height: 100%;
+
+    background-color: #ffffff20;
+    border-bottom-right-radius: 24px;
+    border-top-right-radius: 24px;
+}
+.DocumentsForm:not(.filled) > .buttons > button.add:hover {
+    background-color: #ffffff30;
+}
+
+.DocumentsForm.filled {
+    background-color: #ffffff10;
+    padding: 16px;
+}
+
+.DocumentsForm.filled > .buttons {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+.DocumentsForm.filled > .buttons > button {
+    display: block;
+    margin-bottom: 4px;
+    padding: 8px;
+    border-radius: 16px;
+    min-width: 96px;
+}
+.DocumentsForm.filled > .buttons > .add {
+    background-color: #4d4;
+}
+.DocumentsForm.filled > .buttons > .clear {
+    background-color: #f00;
+    font-size: 0.5em;
+}
+.DocumentsForm.filled > .buttons > .submit {
+    background-color: #44d;
+}
+
+.DocumentsForm.filled > span {
+    flex-grow: 1;
+}
+
+.DocumentsForm.filled > label,
+.DocumentItem {
+    padding: 8px;
+    width: 240px;
+    height: 352px;
+    flex-grow: 0;
+
+    border-radius: 4px;
+    border: 2px solid #ffffff40;
+    
+    position: relative;
+}
+.DocumentsForm.filled > label {
+    display: flex;
+    align-items: center;
+    text-align: center;
 }

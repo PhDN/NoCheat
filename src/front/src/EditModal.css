@@ -1,0 +1,75 @@
+.EditModal {
+    position: fixed;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+
+    top: 0;
+    left: 0;
+    bottom: 0;
+    right: 0;
+
+    background: #0005;
+}
+
+.EditModal > button {
+    all: unset;
+    
+    position: absolute;
+    right: 16px;
+    top: 16px;
+
+    width: 40px;
+    height: 40px;
+
+    background-color: #f00;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 20px;
+}
+
+.EditModal > div {
+    width: 90vw;
+
+    text-align: left;
+    
+    padding: 0.85em 5vw;
+    background-color: #141414;
+}
+.EditModal > div > span {
+    white-space: pre;
+    visibility: hidden;
+    position: absolute;
+}
+.EditModal > div > input {
+    all: unset;
+
+    background-color: #fff3;
+    border-radius: 8px;
+    padding: 0 8px;
+    max-width: 50vw;
+}
+
+.EditModal > textarea {
+    border: unset;
+    background-color: transparent;
+    color: white;
+    caret-color: #fff8;
+    font-size: 0.75em;
+    resize: none;
+
+    white-space: pre;
+    width: 90vw;
+    flex-grow: 1;
+
+    margin-top: 24px;
+    padding: 16px;
+    padding-bottom: 0;
+    background-color: #111b;
+
+    border-top-left-radius: 32px;
+    border-top-right-radius: 32px;
+}

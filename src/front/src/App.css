@@ -14,3 +14,28 @@
 .App a {
     color: #61dafb;
 }
+
+.App > * {
+    display: flex;
+    align-items: center;
+}
+
+.App > nav,
+.App > footer {
+    background-color: #ffffff30;
+
+    width: calc(100% - 2rem);
+    height: 3em;
+
+    padding: 0 1rem;
+
+    font-size: 0.8em;
+}
+
+.App > main {
+    flex-grow: 1;
+}
+
+.App > footer {
+    justify-content: center;
+}

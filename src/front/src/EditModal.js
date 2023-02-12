@@ -1,15 +1,18 @@
 import { useEffect, useRef, useState } from 'react';
-import useDocumentStore from './utils/documentStore';
 
 import './EditModal.css';
 import del from './delete.svg';
 import save from './save.svg';
 
 /**
- * @param {{ id: number; close(): void; }} props
+ * @param {{
+ *      docs: import('./utils/documentStore').DocumentStoreItem[]?;
+ *      docsApi: import('./utils/documentStore').DocumentStoreApi;
+ *      id: number;
+ *      close(): void;
+ * }} props
  */
-export default function EditModal({ close, id }) {
-    const [docs, { get, update }] = useDocumentStore();
+export default function EditModal({ close, docs, docsApi: { add, get, update }, id }) {
     const [mimeType, setMimeType] = useState(/** @type {string?} */ (null));
     const [text, setText] = useState(/** @type {string?} */ (null));
     const [title, setTitle] = useState(/** @type {string?} */ (null));
@@ -19,7 +22,13 @@ export default function EditModal({ close, id }) {
     const span = useRef(/** @type {HTMLSpanElement} */ (null));
     useEffect(() => {
         if (!docs || text !== null) return;
-        get(id).then(async ({document, name}) => {
+        
+        if (id < 0) {
+            setMimeType('text/plain');
+            setText('');
+            setTitle('Untitled');
+            setConfirm(true);
+        } else get(id).then(async ({document, name}) => {
             const text = await document.text();
 
             setMimeType(document.type);
@@ -31,13 +40,20 @@ export default function EditModal({ close, id }) {
         });
     }, [ docs, get, id, text ]);
 
+    const titleInput = useRef(/** @type {HTMLInputElement} */ (null));
+
     return <div className='EditModal'>
         <button className="exit" onClick={() => {
             if (!confirm || window.confirm('Are you sure you want to leave without saving your changes?'))
                 close();
         }}><img src={del} alt="Exit" height={24} /></button>
         {confirm && <button className="save" onClick={async () => {
-            await update(id, new Blob([text], { type: mimeType }), title);
+            if (!title.length) {
+                titleInput.current.focus();
+                return;
+            }
+            
+            await (id < 0 ? add(text, title) : update(id < 0 ? void 0 : id, new Blob([text], { type: mimeType }), title));
             close();
         }}><img src={save} alt="Save" height={24} /></button>}
         <div>
@@ -47,7 +63,7 @@ export default function EditModal({ close, id }) {
                 setTitle(event.target.value);
                 setTitleWidth(span.offsetWidth + 1);
                 setConfirm(true);
-            }} style={{ width: titleWidth || 'fit-content' }} />
+            }} style={{ width: titleWidth || 'fit-content' }} ref={titleInput} />
             {confirm && '*'}
             <span ref={span}>{title}</span>
         </div>

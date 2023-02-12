@@ -1,6 +1,5 @@
 import { useState } from "react";
 import DocumentItem from "./DocumentItem";
-import useDocumentStore from "./utils/documentStore";
 
 import './DocumentsForm.css';
 import del from './delete.svg';
@@ -8,10 +7,13 @@ import _new from './new.svg';
 import send from './send.svg';
 
 /**
- * @param {{ openEditModal(id: number): Promise<void>; }} props
+ * @param {{
+ *      docs: import('./utils/documentStore').DocumentStoreItem[]?;
+ *      docsApi: import('./utils/documentStore').DocumentStoreApi;
+ *      openEditModal(id: number): Promise<void>;
+ * }} props
  */
-export default function DocumentsForm({ openEditModal }) {
-    const [docs, { add, clear, remove }] = useDocumentStore();
+export default function DocumentsForm({ docs, docsApi: { add, clear, remove, update }, openEditModal }) {
     const [id] = useState(Math.random().toString(16).substring(2));
 
     return <form
@@ -24,7 +26,8 @@ export default function DocumentsForm({ openEditModal }) {
                 name={name}
                 document={document}
                 openEditModal={openEditModal.bind(null, id)}
-                remove={remove.bind(null, id)} />
+                remove={remove.bind(null, id)}
+                update={update.bind(null, id, document)} />
         </>)}
         <label htmlFor={`file-${id}`}>Insert files to submit here</label>
         <input
@@ -42,6 +45,7 @@ export default function DocumentsForm({ openEditModal }) {
         <div className="buttons">
             <button className="add" title="Add" onClick={event => {
                 event.preventDefault();
+                openEditModal(-1);
             }}><img src={_new} alt="Add" height={24} /></button>
             {docs && docs.length > 0 && <>
                 <button className="clear" title="Clear" onClick={event => {

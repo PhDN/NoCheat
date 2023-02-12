@@ -92,6 +92,8 @@ export default function useDocumentStore(storeName = 'documents') {
     const [docs, setDocs] = useState(/** @type {DocumentStoreItem[]} */([]));
 
     useEffect(() => {
+        if (db) return;
+
         const req = indexedDB.open(storeName);
         req.onupgradeneeded = () => {
             const objStore = (/** @type {TypedIDBDatabase<DocumentStoreMap>} */ (req.result)).createObjectStore(storeName, {
@@ -107,11 +109,10 @@ export default function useDocumentStore(storeName = 'documents') {
             
             setDb(db);
             setDocs(docs);
-            console.log(docs);
         });
 
         return () => (db && db.close());
-    }, []);
+    }, [db, storeName]);
 
     /** @type {(x: unknown) => x is string} */
     function isString(x) {
@@ -127,9 +128,15 @@ export default function useDocumentStore(storeName = 'documents') {
             let makeDocName = () => 'doc' + n++;
 
             const objStore = db.transaction([storeName], 'readwrite').objectStore(storeName);
-            const newDocs = [ ...docs ];
-            for (let i = 0; i < documents.length; ++i) {
-                const document = documents[i];
+            const newDocs = [ ...docs ], /** @type {Promise<IDBValidKey>[]} */ ids = [];
+
+            let skip;
+            documents.forEach((document, i) => {
+                if (skip) {
+                    skip = 0;
+                    return;
+                }
+
                 const item = {
                     document: isString(document) ?
                         new Blob([document], { type: 'text/plain' }) :
@@ -137,14 +144,16 @@ export default function useDocumentStore(storeName = 'documents') {
                     name: document instanceof File ?
                         document.name :
                         isString(documents[i+1]) ?
-                        /** @type {string} */ (documents[++i]) :
+                        /** @type {string} */ ((skip = 1), documents[++i]) :
                         makeDocName()
                 };
-                objStore.add(item);
                 newDocs.push(item);
-            }
+                ids.push(promisifyIdbRequest(objStore.add(item)));
+            });
 
-            console.log(docs, newDocs);
+            (await Promise.all(ids)).forEach((id, i) => {
+                newDocs[docs.length + i].id = id;
+            });
 
             setDocs(newDocs);
             objStore.transaction.commit();

@@ -40,16 +40,16 @@ export default function EditModal({ close, id }) {
     const titleInput = useRef(/** @type {HTMLInputElement} */ (null));
 
     return <div className='EditModal'>
-        <button className="exit" onClick={() => {
+        <button className="exit" title="Exit" onClick={() => {
             if (!confirm || window.confirm('Are you sure you want to leave without saving your changes?'))
                 close();
         }}><img src={del} alt="Exit" height={24} /></button>
-        {confirm && <button className="save" onClick={async () => {
+        {confirm && <button className="save" title="Save" onClick={async () => {
             if (!title.length) {
                 titleInput.current.focus();
                 return;
             }
-            
+
             await (id < 0 ? add(text, title) : update(id < 0 ? void 0 : id, new Blob([text], { type: mimeType }), title));
             close();
         }}><img src={save} alt="Save" height={24} /></button>}

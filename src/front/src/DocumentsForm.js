@@ -1,5 +1,6 @@
-import { useState } from "react";
+import { useContext, useState } from "react";
 import DocumentItem from "./DocumentItem";
+import DocumentStore from "./DocumentStore";
 
 import './DocumentsForm.css';
 import del from './delete.svg';
@@ -7,13 +8,10 @@ import _new from './new.svg';
 import send from './send.svg';
 
 /**
- * @param {{
- *      docs: import('./utils/documentStore').DocumentStoreItem[]?;
- *      docsApi: import('./utils/documentStore').DocumentStoreApi;
- *      openEditModal(id: number): Promise<void>;
- * }} props
+ * @param {{ openEditModal(id: number): Promise<void>; }} props
  */
-export default function DocumentsForm({ docs, docsApi: { add, clear, remove, update }, openEditModal }) {
+export default function DocumentsForm({ openEditModal }) {
+    const [docs, { add, clear, remove, update }] = useContext(DocumentStore);
     const [id] = useState(Math.random().toString(16).substring(2));
 
     return <form

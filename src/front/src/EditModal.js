@@ -1,18 +1,15 @@
-import { useEffect, useRef, useState } from 'react';
+import { useContext, useEffect, useRef, useState } from 'react';
+import DocumentStore from './DocumentStore';
 
 import './EditModal.css';
 import del from './delete.svg';
 import save from './save.svg';
 
 /**
- * @param {{
- *      docs: import('./utils/documentStore').DocumentStoreItem[]?;
- *      docsApi: import('./utils/documentStore').DocumentStoreApi;
- *      id: number;
- *      close(): void;
- * }} props
+ * @param {{ id: number; close(): void; }} props
  */
-export default function EditModal({ close, docs, docsApi: { add, get, update }, id }) {
+export default function EditModal({ close, id }) {
+    const [docs, { add, get, update }] = useContext(DocumentStore);
     const [mimeType, setMimeType] = useState(/** @type {string?} */ (null));
     const [text, setText] = useState(/** @type {string?} */ (null));
     const [title, setTitle] = useState(/** @type {string?} */ (null));

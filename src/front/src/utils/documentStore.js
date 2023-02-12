@@ -70,6 +70,7 @@ import { useEffect, useState } from "react";
  *  clear(): Promise<void>;
  *  get(id: number): Promise<DocumentStoreItem>;
  *  remove(id: number): Promise<void>;
+ *  update(id: number, document: Blob, name: string): Promise<void>;
  * }} DocumentStoreApi
  */
 
@@ -175,6 +176,14 @@ export default function useDocumentStore(storeName = 'documents') {
             if (!db) throw new Error('Document store not open');
             await promisifyIdbRequest(db.transaction([storeName], 'readwrite').objectStore(storeName).delete(id));
             setDocs(docs.filter(({id: itemId}) => itemId !== id));
+        },
+
+        async update(id, document, name) {
+            if (!db) throw new Error('Document store not open');
+
+            const newRecord = { id, document, name };
+            await promisifyIdbRequest(db.transaction([storeName], 'readwrite').objectStore(storeName).put(newRecord));
+            setDocs(docs.map(record => record.id === id ? newRecord : record));
         }
     }];
 }

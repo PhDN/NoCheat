@@ -17,18 +17,23 @@
     all: unset;
     
     position: absolute;
-    right: 16px;
     top: 16px;
 
     width: 40px;
     height: 40px;
 
-    background-color: #f00;
-
     display: flex;
     justify-content: center;
     align-items: center;
     border-radius: 20px;
+}
+.EditModal > button.exit {
+    background-color: #f00;
+    right: 16px;
+}
+.EditModal > button.save {
+    background-color: #44f;
+    right: 64px;
 }
 
 .EditModal > div {

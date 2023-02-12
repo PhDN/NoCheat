@@ -3,12 +3,14 @@ import useDocumentStore from './utils/documentStore';
 
 import './EditModal.css';
 import del from './delete.svg';
+import save from './save.svg';
 
 /**
  * @param {{ id: number; close(): void; }} props
  */
 export default function EditModal({ close, id }) {
-    const [docs, { get }] = useDocumentStore();
+    const [docs, { get, update }] = useDocumentStore();
+    const [mimeType, setMimeType] = useState(/** @type {string?} */ (null));
     const [text, setText] = useState(/** @type {string?} */ (null));
     const [title, setTitle] = useState(/** @type {string?} */ (null));
     const [titleWidth, setTitleWidth] = useState(0);
@@ -19,6 +21,8 @@ export default function EditModal({ close, id }) {
         if (!docs || text !== null) return;
         get(id).then(async ({document, name}) => {
             const text = await document.text();
+
+            setMimeType(document.type);
             setText(text);
             setTitle(name);
 
@@ -28,10 +32,14 @@ export default function EditModal({ close, id }) {
     }, [ docs, get, id, text ]);
 
     return <div className='EditModal'>
-        <button onClick={() => {
+        <button className="exit" onClick={() => {
             if (!confirm || window.confirm('Are you sure you want to leave without saving your changes?'))
                 close();
-        }}><img src={del} alt="Clear" height={24} /></button>
+        }}><img src={del} alt="Exit" height={24} /></button>
+        {confirm && <button className="save" onClick={async () => {
+            await update(id, new Blob([text], { type: mimeType }), title);
+            close();
+        }}><img src={save} alt="Save" height={24} /></button>}
         <div>
             Editing <input type="text" value={title ?? ''} disabled={text === null} onInput={event => {
                 const span = event.target.nextElementSibling;

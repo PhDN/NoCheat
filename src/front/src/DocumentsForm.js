@@ -18,15 +18,14 @@ export default function DocumentsForm({ openEditModal }) {
         className={`DocumentsForm${docs?.length ? ' filled' : ''}`}
         encType='multipart/form-data'
         method='POST'>
-        {docs?.map(({name, document, id}) => <>
+        {docs?.map(({name, document, id}) =>
             <DocumentItem
                 key={id}
                 name={name}
                 document={document}
                 openEditModal={openEditModal.bind(null, id)}
                 remove={remove.bind(null, id)}
-                update={update.bind(null, id, document)} />
-        </>)}
+                update={update.bind(null, id, document)} />)}
         <label htmlFor={`file-${id}`}>Insert files to submit here</label>
         <input
             accept=".pdf,application/pdf,application/x-pdf,.md,.markdown,.mdown,.markdn,text/markdown,.txt,text/plain"

@@ -1,52 +1,108 @@
 import os, argparse
-from flask import Flask, json, request, Response, send_from_directory
-from werkzeug.datastructures import FileStorage
-from typing import Mapping, Any
+from random import randbytes
+from typing import Any, Mapping, Optional, Union
 
-def set_up_server(app: Flask):
+from flask import Flask, json, request, Response, send_from_directory
+from werkzeug.exceptions import HTTPException, BadRequest, MethodNotAllowed, NotFound
+from werkzeug.datastructures import FileStorage
+
+def set_up_server(app: Union[Flask, str], static_dir: Optional[str] = None):
+    if isinstance(app, str):
+        app = Flask(app, static_folder = static_dir)
+
     jobs = {}
+
+    def generate_job_id() -> str:
+        return ''.join(map(lambda x: hex(x)[2:].zfill(2), randbytes(16)))
 
     HTTP_METHODS = ['GET', 'HEAD', 'POST', 'PUT', 'DELETE', 'CONNECT', 'OPTIONS', 'TRACE', 'PATCH']
 
-    def api_response(response: Mapping[str, Any], status: int = 200):
+    def api_response(response: Union[Mapping[str, Any], HTTPException], status: int = 200):
+        if isinstance(response, HTTPException):
+            r = { 'message': response.description }
+            if isinstance(response, MethodNotAllowed):
+                r['allowed'] = response.valid_methods
+            response = r
+
         response['status'] = status
         return app.response_class(response = json.dumps(response), status = status, mimetype = 'application/json')
 
     @app.route('/', defaults={'path': ''})
     @app.route('/<path:path>')
     def serve(path):
-        print(path, path == '')
+        """Serves a file from the static directory."""
+
         if path != '' and os.path.exists(os.path.join(app.static_folder, path)):
             return send_from_directory(app.static_folder, path)
         elif path == '':
             return send_from_directory(app.static_folder, 'index.html')
         else:
-            return "Page not found", 404
+            raise NotFound()
 
     @app.route('/api/submit', methods = HTTP_METHODS)
     def api_submit():
+        """Submits a new document analysis job to the server."""
+
         if request.method != 'POST':
-            return api_response({
-                'message': f"Disallowed request method {request.method}"
-            }, 405)
+            raise MethodNotAllowed(('POST',), f"Disallowed request method {request.method}")
         elif not request.headers.get('Content-Type').startswith('multipart/form-data'):
-            return api_response({
-                'message': f'Invalid content-type {request.headers.get("Content-Type")}'
-            }, 400)
+            raise BadRequest(f'Unsuported content type {request.headers.get("Content-Type")}')
+        else:
+            job_files = []
+            for filelist in request.files:
+                for file in request.files.getlist(filelist):
+                    job_files.append(file)
 
-        for filelist in request.files:
-            for filename in request.files.getlist(filelist):
-                pass # TODO: Process files
+            job_id: str = generate_job_id()
+            while job_id in jobs:
+                job_id = generate_job_id()
 
-        return api_response({})
+            # TODO: place in jobs queue & launch
+            jobs[job_id] = job_files
 
-    @app.route('/api', methods = HTTP_METHODS)
-    def api_test():
-        return api_response({ 'message': "Page not found" }, 404)
+            return api_response({ 'job': job_id })
+    
+    @app.route('/api/job/<job>')
+    def api_job(job: str):
+        if request.method != 'GET':
+            raise MethodNotAllowed(('GET',), f"Disallowed request method {request.method}")
+        elif job not in jobs:
+            raise NotFound(f'Job {job} does not exist')
+        else:
+            # TODO: wait until job is completed
+            return api_response({})
+
+    @app.errorhandler(400)
+    def error_400(error):
+        if request.path == '/api' or request.path.startswith('/api/'):
+            return api_response(error, 400)
+        else:
+            return "400 BAD REQUEST", 400
+
+    @app.errorhandler(404)
+    def error_404(error):
+        if request.path == '/api' or request.path.startswith('/api/'):
+            return api_response(error, 404)
+        else:
+            return "404 NOT FOUND", 404
+
+    @app.errorhandler(405)
+    def error_405(error):
+        if request.path == '/api' or request.path.startswith('/api/'):
+            return api_response(error, 405)
+        else:
+            return "405 METHOD NOT ALLOWED", 405
+
+    @app.errorhandler(500)
+    def error_500(error):
+        if request.path == '/api' or request.path.startswith('/api/'):
+            return api_response(error, 500)
+        else:
+            return "500 INTERNAL SERVER ERROR", 500
 
     return app
 
-def main():
+if __name__ == '__main__':
     parser = argparse.ArgumentParser(
         prog = 'NoCheat',
         description = 'Runs the NoCheat server')
@@ -61,10 +117,6 @@ def main():
         dest = 'port',
         help = 'Sets the port on which this server listens to',
         type = int)
-    
     args = parser.parse_args()
-    app = Flask(__name__, static_folder = args.static_dir)
-    set_up_server(app).run(port = args.port, threaded = True, use_reloader = True)
 
-if __name__ == '__main__':
-    main()
+    set_up_server(__name__, args.static_dir).run(port = args.port, threaded = True, use_reloader = True)

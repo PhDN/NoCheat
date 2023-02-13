@@ -1,19 +1,15 @@
-import os, argparse
+import os, argparse, asyncio
+from concurrent.futures import CancelledError, Future, ThreadPoolExecutor, TimeoutError
 from random import randbytes
-from typing import Any, Mapping, Optional, Union
+from typing import Any, Mapping, List, Optional, Tuple, Union
 
 from flask import Flask, json, request, Response, send_from_directory
-from werkzeug.exceptions import HTTPException, BadRequest, MethodNotAllowed, NotFound
-from werkzeug.datastructures import FileStorage
+from werkzeug.exceptions import HTTPException, BadRequest, Conflict, MethodNotAllowed, NotFound
+from werkzeug.datastructures import BytesIO, FileStorage
 
 def set_up_server(app: Union[Flask, str], static_dir: Optional[str] = None):
     if isinstance(app, str):
         app = Flask(app, static_folder = static_dir)
-
-    jobs = {}
-
-    def generate_job_id() -> str:
-        return ''.join(map(lambda x: hex(x)[2:].zfill(2), randbytes(16)))
 
     def api_response(response: Union[Mapping[str, Any], HTTPException], status: Optional[int] = None):
         if isinstance(response, HTTPException):
@@ -28,6 +24,26 @@ def set_up_server(app: Union[Flask, str], static_dir: Optional[str] = None):
 
         response['status'] = status
         return app.response_class(response = json.dumps(response), status = status, mimetype = 'application/json')
+
+    executor = ThreadPoolExecutor(max_workers = 20)
+    jobs: Mapping[str, Future] = {}
+    def generate_job_id() -> str:
+        return ''.join(map(lambda x: hex(x)[2:].zfill(2), randbytes(16)))
+
+    def exec_job(job_id: str, files: List[FileStorage]) -> Tuple[str]:
+        # TODO: Process files
+        return job_id,
+
+    def remove_job(future: Future[Tuple[str]]):
+        print(future.cancelled(), future.result())
+        if future.cancelled():
+            return
+
+        job_id = future.result()[0]
+        async def remove():
+            asyncio.sleep(3600)
+            del jobs[job_id]
+        asyncio.new_event_loop().run_until_complete(remove())
 
     @app.route('/', defaults = {'path': ''})
     @app.route('/<path:path>')
@@ -57,13 +73,45 @@ def set_up_server(app: Union[Flask, str], static_dir: Optional[str] = None):
             while job_id in jobs:
                 job_id = generate_job_id()
 
-            # TODO: place in jobs queue & launch
-            jobs[job_id] = job_files
+            job = executor.submit(exec_job, job_id, job_files)
+            job.add_done_callback(remove_job)
+            jobs[job_id] = job
 
             return api_response({ 'job': job_id })
     
     @app.route('/api/job/<job>', methods = ['GET'])
     def api_job(job: str):
+        """Await job completion."""
+
+        if job not in jobs:
+            raise NotFound(f'Job {job} does not exist')
+
+        try:
+            result = jobs[job].result(request.args.get('timeout', None, type = int))
+            # TODO: Populate with job completion
+            return api_response({})
+        except CancelledError:
+            return api_response({ 'message': f"Job {job} has been cancelled" }, 410)
+        except TimeoutError:
+            return api_response({ 'message': "Timeout expired" }, 408)
+
+    @app.route('/api/job/<job>', methods = ['DELETE'])
+    def api_cancel_job(job: str):
+        """Cancels a given job."""
+
+        if job not in jobs:
+            raise NotFound(f'Job {job} does not exist')
+        elif jobs[job].done():
+            raise Conflict(f'Job {job} already completed')
+        else:
+            jobs[job].cancel()
+            del jobs[job]
+            return api_response({})
+
+    @app.route('/api/job/<job>/query', methods = ['GET'])
+    def api_query_job(job: str):
+        """Query job status."""
+
         if job not in jobs:
             raise NotFound(f'Job {job} does not exist')
         else:
@@ -91,6 +139,13 @@ def set_up_server(app: Union[Flask, str], static_dir: Optional[str] = None):
         else:
             return "405 METHOD NOT ALLOWED", 405
 
+    @app.errorhandler(409)
+    def error_409(error):
+        if request.path == '/api' or request.path.startswith('/api/'):
+            return api_response(error)
+        else:
+            return "409 CONFLICT", 409
+
     @app.errorhandler(500)
     def error_500(error):
         if request.path == '/api' or request.path.startswith('/api/'):
@@ -115,6 +170,10 @@ if __name__ == '__main__':
         dest = 'port',
         help = 'Sets the port on which this server listens to',
         type = int)
+    parser.add_argument('--debug',
+        action = 'store_true',
+        dest = 'debug',
+        help = 'Run in debug mode')
     args = parser.parse_args()
 
-    set_up_server(__name__, args.static_dir).run(port = args.port, threaded = True, use_reloader = True)
+    set_up_server(__name__, args.static_dir).run(debug = args.debug, port = args.port, threaded = True, use_reloader = True)

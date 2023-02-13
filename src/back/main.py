@@ -1,6 +1,6 @@
 import os, argparse
 from flask import Flask, json, request, Response, send_from_directory
-from werkzeug.datastructures import FileStorage, MultiDict
+from werkzeug.datastructures import FileStorage
 from typing import Mapping, Any
 
 def set_up_server(app: Flask):
@@ -29,13 +29,14 @@ def set_up_server(app: Flask):
             return api_response({
                 'message': f"Disallowed request method {request.method}"
             }, 405)
-        if not request.headers.get('Content-Type').startswith('multipart/form-data'):
+        elif not request.headers.get('Content-Type').startswith('multipart/form-data'):
             return api_response({
                 'message': f'Invalid content-type {request.headers.get("Content-Type")}'
             }, 400)
 
-        # TODO: process files
-        files : MultiDict[str, FileStorage] = request.files
+        for filelist in request.files:
+            for filename in request.files.getlist(filelist):
+                pass # TODO: Process files
 
         return api_response({})
 

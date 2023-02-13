@@ -4,6 +4,8 @@ import DocumentsForm from './DocumentsForm';
 import EditModal from './EditModal';
 import useDocumentStore from './utils/documentStore';
 
+import JobsList from './JobsList';
+
 import './App.css';
 
 export default function App() {
@@ -18,6 +20,7 @@ export default function App() {
             <nav>NoCheat</nav>
             <main>
                 <DocumentsForm openEditModal={openEditModal} />
+                <JobsList />
                 {editing !== null && <EditModal id={editing} close={setEditing.bind(null, null)} />}
             </main>
             <footer>&#169; 2023 | NoCheat Group</footer>

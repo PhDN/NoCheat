@@ -15,19 +15,21 @@ def set_up_server(app: Union[Flask, str], static_dir: Optional[str] = None):
     def generate_job_id() -> str:
         return ''.join(map(lambda x: hex(x)[2:].zfill(2), randbytes(16)))
 
-    HTTP_METHODS = ['GET', 'HEAD', 'POST', 'PUT', 'DELETE', 'CONNECT', 'OPTIONS', 'TRACE', 'PATCH']
-
-    def api_response(response: Union[Mapping[str, Any], HTTPException], status: int = 200):
+    def api_response(response: Union[Mapping[str, Any], HTTPException], status: Optional[int] = None):
         if isinstance(response, HTTPException):
-            r = { 'message': response.description }
-            if isinstance(response, MethodNotAllowed):
-                r['allowed'] = response.valid_methods
-            response = r
+            status = response.code
+        elif status is None:
+            status = 200
+
+        if isinstance(response, MethodNotAllowed):
+            response = { 'allowed': list(response.valid_methods), 'message': f"Disallowed request method {request.method}" }
+        elif isinstance(response, HTTPException):
+            response = { 'message': response.description }
 
         response['status'] = status
         return app.response_class(response = json.dumps(response), status = status, mimetype = 'application/json')
 
-    @app.route('/', defaults={'path': ''})
+    @app.route('/', defaults = {'path': ''})
     @app.route('/<path:path>')
     def serve(path):
         """Serves a file from the static directory."""
@@ -39,13 +41,11 @@ def set_up_server(app: Union[Flask, str], static_dir: Optional[str] = None):
         else:
             raise NotFound()
 
-    @app.route('/api/submit', methods = HTTP_METHODS)
+    @app.route('/api/submit', methods = ['POST'])
     def api_submit():
         """Submits a new document analysis job to the server."""
 
-        if request.method != 'POST':
-            raise MethodNotAllowed(('POST',), f"Disallowed request method {request.method}")
-        elif not request.headers.get('Content-Type').startswith('multipart/form-data'):
+        if not request.headers.get('Content-Type').startswith('multipart/form-data'):
             raise BadRequest(f'Unsuported content type {request.headers.get("Content-Type")}')
         else:
             job_files = []
@@ -62,11 +62,9 @@ def set_up_server(app: Union[Flask, str], static_dir: Optional[str] = None):
 
             return api_response({ 'job': job_id })
     
-    @app.route('/api/job/<job>')
+    @app.route('/api/job/<job>', methods = ['GET'])
     def api_job(job: str):
-        if request.method != 'GET':
-            raise MethodNotAllowed(('GET',), f"Disallowed request method {request.method}")
-        elif job not in jobs:
+        if job not in jobs:
             raise NotFound(f'Job {job} does not exist')
         else:
             # TODO: wait until job is completed
@@ -75,28 +73,28 @@ def set_up_server(app: Union[Flask, str], static_dir: Optional[str] = None):
     @app.errorhandler(400)
     def error_400(error):
         if request.path == '/api' or request.path.startswith('/api/'):
-            return api_response(error, 400)
+            return api_response(error)
         else:
             return "400 BAD REQUEST", 400
 
     @app.errorhandler(404)
     def error_404(error):
         if request.path == '/api' or request.path.startswith('/api/'):
-            return api_response(error, 404)
+            return api_response(error)
         else:
             return "404 NOT FOUND", 404
 
     @app.errorhandler(405)
     def error_405(error):
         if request.path == '/api' or request.path.startswith('/api/'):
-            return api_response(error, 405)
+            return api_response(error)
         else:
             return "405 METHOD NOT ALLOWED", 405
 
     @app.errorhandler(500)
     def error_500(error):
         if request.path == '/api' or request.path.startswith('/api/'):
-            return api_response(error, 500)
+            return api_response(error)
         else:
             return "500 INTERNAL SERVER ERROR", 500
 

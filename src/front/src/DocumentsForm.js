@@ -16,8 +16,14 @@ export default function DocumentsForm({ openEditModal }) {
 
     return <form
         className={`DocumentsForm${docs?.length ? ' filled' : ''}`}
-        encType='multipart/form-data'
-        method='POST'>
+        onSubmit={event => {
+            event.preventDefault();
+            const formData = new FormData(event.target);
+            fetch('/api/submit', {
+                method: 'POST',
+                body: formData
+            });
+        }}>
         {docs?.map(({name, document, id}) =>
             <DocumentItem
                 key={id}

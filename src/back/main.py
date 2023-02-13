@@ -1,7 +1,17 @@
 import os, argparse
-from flask import Flask, Response, send_from_directory
+from flask import Flask, json, request, Response, send_from_directory
+from werkzeug.datastructures import FileStorage, MultiDict
+from typing import Mapping, Any
 
 def set_up_server(app: Flask):
+    jobs = {}
+
+    HTTP_METHODS = ['GET', 'HEAD', 'POST', 'PUT', 'DELETE', 'CONNECT', 'OPTIONS', 'TRACE', 'PATCH']
+
+    def api_response(response: Mapping[str, Any], status: int = 200):
+        response['status'] = status
+        return app.response_class(response = json.dumps(response), status = status, mimetype = 'application/json')
+
     @app.route('/', defaults={'path': ''})
     @app.route('/<path:path>')
     def serve(path):
@@ -13,9 +23,25 @@ def set_up_server(app: Flask):
         else:
             return "Page not found", 404
 
-    @app.route('/api', methods=['GET'])
+    @app.route('/api/submit', methods = HTTP_METHODS)
+    def api_submit():
+        if request.method != 'POST':
+            return api_response({
+                'message': f"Disallowed request method {request.method}"
+            }, 405)
+        if not request.headers.get('Content-Type').startswith('multipart/form-data'):
+            return api_response({
+                'message': f'Invalid content-type {request.headers.get("Content-Type")}'
+            }, 400)
+
+        # TODO: process files
+        files : MultiDict[str, FileStorage] = request.files
+
+        return api_response({})
+
+    @app.route('/api', methods = HTTP_METHODS)
     def api_test():
-        return Response('{ "status": 200 }', 200, mimetype = 'application/json')
+        return api_response({ 'message': "Page not found" }, 404)
 
     return app
 

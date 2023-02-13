@@ -70,11 +70,10 @@
     width: 90vw;
     flex-grow: 1;
 
-    margin-top: 24px;
+    margin: 24px 0;
     padding: 16px;
     padding-bottom: 0;
-    background-color: #111b;
+    background-color: #111c;
 
-    border-top-left-radius: 32px;
-    border-top-right-radius: 32px;
+    border-radius: 32px;
 }

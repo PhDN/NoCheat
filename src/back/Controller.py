@@ -73,7 +73,7 @@ class Controller:
         # Feature extraction where convert text to relevant data
         result = model(text) # Model step where checks if text AI or not
         
-        return self.analyze_results(result)
+        return result
 
     def analyze_results(self, results):
         """

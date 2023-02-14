@@ -1,4 +1,4 @@
-from model import GPT2PPL
+from src.back.model import GPT2PPL
 
 # initialize the model
 model = GPT2PPL()

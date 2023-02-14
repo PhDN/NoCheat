@@ -34,17 +34,6 @@ def set_up_server(app: Union[Flask, str], static_dir: Optional[str] = None):
         # TODO: Process files
         return job_id,
 
-    def remove_job(future: Future[Tuple[str]]):
-        print(future.cancelled(), future.result())
-        if future.cancelled():
-            return
-
-        job_id = future.result()[0]
-        async def remove():
-            asyncio.sleep(3600)
-            del jobs[job_id]
-        asyncio.new_event_loop().run_until_complete(remove())
-
     @app.route('/', defaults = {'path': ''})
     @app.route('/<path:path>')
     def serve(path):
@@ -74,7 +63,6 @@ def set_up_server(app: Union[Flask, str], static_dir: Optional[str] = None):
                 job_id = generate_job_id()
 
             job = executor.submit(exec_job, job_id, job_files)
-            job.add_done_callback(remove_job)
             jobs[job_id] = job
 
             return api_response({ 'job': job_id })
@@ -84,11 +72,12 @@ def set_up_server(app: Union[Flask, str], static_dir: Optional[str] = None):
         """Await job completion."""
 
         if job not in jobs:
-            raise NotFound(f'Job {job} does not exist')
+            raise NotFound(f'Job {job} has been cancelled or does not exist')
 
         try:
             result = jobs[job].result(request.args.get('timeout', None, type = int))
             # TODO: Populate with job completion
+            del jobs[job]
             return api_response({})
         except CancelledError:
             return api_response({ 'message': f"Job {job} has been cancelled" }, 410)

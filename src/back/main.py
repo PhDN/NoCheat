@@ -4,7 +4,7 @@ from random import randbytes
 from typing import Any, Mapping, List, Optional, Tuple, Union
 
 from flask import Flask, json, request, Response, send_from_directory
-from werkzeug.exceptions import HTTPException, BadRequest, Conflict, MethodNotAllowed, NotFound
+from werkzeug.exceptions import HTTPException, BadRequest, Conflict, MethodNotAllowed, NotFound, UnsupportedMediaType
 from werkzeug.datastructures import BytesIO, FileStorage
 
 def set_up_server(app: Union[Flask, str], static_dir: Optional[str] = None):
@@ -51,7 +51,7 @@ def set_up_server(app: Union[Flask, str], static_dir: Optional[str] = None):
         """Submits a new document analysis job to the server."""
 
         if not request.headers.get('Content-Type').startswith('multipart/form-data'):
-            raise BadRequest(f'Unsuported content type {request.headers.get("Content-Type")}')
+            raise UnsupportedMediaType(f'Unsuported content type {request.headers.get("Content-Type")}')
         else:
             job_files = []
             for filelist in request.files:
@@ -134,6 +134,13 @@ def set_up_server(app: Union[Flask, str], static_dir: Optional[str] = None):
             return api_response(error)
         else:
             return "409 CONFLICT", 409
+
+    @app.errorhandler(415)
+    def error_415(error):
+        if request.path == '/api' or request.path.startswith('/api/'):
+            return api_response(error)
+        else:
+            return "415 UNSUPPORTED MEDIA TYPE", 415
 
     @app.errorhandler(500)
     def error_500(error):

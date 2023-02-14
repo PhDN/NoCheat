@@ -6,13 +6,13 @@ testText = "Lorem ipsum dolor sit amet"
 
 
 class TestController(TestCase):
-    def test_process_fileTxt(self):
+    def test_process_file(self):
+        assert True
+
+    def test_parse_fileTxt(self):
         t = open("lipsum.txt")
         file = FileStorage(stream=t, filename="lipsum.txt")
         self.assertEquals(testText, c.parse_file(file))
-
-    def test_parse_file(self):
-        assert True
 
     def test_analyze_results(self):
         assert True

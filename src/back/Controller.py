@@ -81,4 +81,4 @@ class Controller:
         :param results:
         :return:
         """
-        return None
+        return results[0]["label"]

@@ -1,5 +1,6 @@
 from werkzeug.datastructures import FileStorage
 from PyPDF2 import PdfFileReader
+from src.back.model import GPT2PPL
 import docx
 
 ALLOWED_EXTENSIONS = {'txt', 'docx', 'pdf'}
@@ -67,9 +68,12 @@ class Controller:
         :return:
         """
         text = parse_file(file)
+        # initialize the model
+        model = GPT2PPL()
         # Feature extraction where convert text to relevant data
-        res = None # Model step where checks if text AI or not
-        return self.analyze_results(res)
+        result = model(text) # Model step where checks if text AI or not
+        
+        return self.analyze_results(result)
 
     def analyze_results(self, results):
         """

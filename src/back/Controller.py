@@ -31,7 +31,7 @@ class Controller:
         # Feature extraction where convert text to relevant data
         result = model(text) # Model step where checks if text AI or not
         
-        return self.analyze_results(result)
+        return result
 
     def parse_file(self, file):
         """
@@ -40,14 +40,14 @@ class Controller:
         :return:
         """
 
-        #open text file in read mode
-        text_file = open("D:/data.txt", "r")
-        #read whole file to a string
+        # open text file in read mode
+        text_file = open(file, 'r')
+        # read whole file to a string
         text = text_file.read()
-        #close file
+        # close file
         text_file.close()
-        
-        print(text)
+
+        return text
 
     def analyze_results(self, results):
         """

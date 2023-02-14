@@ -1,6 +1,6 @@
 from werkzeug.datastructures import FileStorage
 from PyPDF2 import PdfFileReader
-from src.back.model import GPT2PPL
+from model import GPT2PPL
 import docx
 
 ALLOWED_EXTENSIONS = {'txt', 'docx', 'pdf'}
@@ -26,7 +26,10 @@ def parse_file(file: FileStorage):
     :raises IOError when file is not a document file
     :return: A string containing the text from the document
     """
-    filetype = file_type(file.filename)
+    try:
+        filetype = file_type(file.filename)
+    except IOError:
+        pass
     text = ""
     if filetype == "txt":
         text = file.stream.read()

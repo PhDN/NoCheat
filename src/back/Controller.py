@@ -1,3 +1,45 @@
+from werkzeug.datastructures import FileStorage
+from PyPDF2 import PdfFileReader
+import docx
+
+ALLOWED_EXTENSIONS = {'txt', 'docx', 'pdf'}
+
+
+def file_type(filename: str) -> str:
+    """
+    :param filename A string with the name of the file
+    :raise: IOError if the file is not one of the allowed filetypes
+    :return: A string with the file extension
+    """
+    if '.' in filename:
+        extension = filename.rsplit('.', 1)[1].lower()
+        if extension in ALLOWED_EXTENSIONS:
+            return extension
+    raise IOError("Not a text file. Input must be a txt, pdf, or docx file.")
+
+
+def parse_file(file: FileStorage):
+    """
+    Takes a text file and moves text into data structure.
+    :param file: File to be parsed, must be a document
+    :raises IOError when file is not a document file
+    :return: A string containing the text from the document
+    """
+    filetype = file_type(file.filename)
+    text = ""
+    if filetype == "txt":
+        text = file.stream.read()
+    elif filetype == "pdf":
+        reader = PdfFileReader(file.stream.read())
+        for page in reader.pages:
+            text = text + page.extractText()
+    else:
+        doc = docx.Document(file.stream)
+        for p in doc.paragraphs:
+            text = text + p.text
+    return text
+
+
 class Controller:
     """
     The controller processes users input from the website and uses it to update the model, and the website in turn.
@@ -17,24 +59,17 @@ class Controller:
             cls.instance = super(Controller, cls).__new__(cls)
         return cls.instance
 
-    def process_file(self, file):
+    def process_file(self, file: FileStorage):
         """
         Takes a text file and returns the results of human-AI check
         :param file:
+        :raises Exception
         :return:
         """
-        text = self.parse_file(file)
+        text = parse_file(file)
         # Feature extraction where convert text to relevant data
         res = None # Model step where checks if text AI or not
         return self.analyze_results(res)
-
-    def parse_file(self, file):
-        """
-        Takes a text file and moves text into data structure.
-        :param file:
-        :return:
-        """
-        return None
 
     def analyze_results(self, results):
         """

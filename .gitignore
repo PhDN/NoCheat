@@ -4,3 +4,5 @@ src/front/build/
 *.log
 .idea/
 .pytest_cache/
+src/back/__pycache__/*
+src/test/__pycache__/*

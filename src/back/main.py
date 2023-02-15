@@ -33,17 +33,17 @@ def set_up_server(app: Union[Flask, str], static_dir: Optional[str] = None):
     def generate_job_id() -> str:
         return ''.join(map(lambda x: hex(x)[2:].zfill(2), randbytes(16)))
 
-    def exec_job(job_id: str, files: List[FileStorage]):
+    def exec_job(job_id: str, files: List[Tuple[str, Union[str, IOError]]]):
         controller = Controller.get_instance()
         results = []
         error = False
 
         for filename, text in files:
             try:
-                if text is not None:
-                    results.append({ 'name': filename, 'status': controller.process_text(text)[1] })
+                if isinstance(text, IOError):
+                    results.append({ 'name': filename, 'status': str(text) })
                 else:
-                    results.append({ 'name': filename, 'status': 'Invalid file format' })
+                    results.append({ 'name': filename, 'status': controller.process_text(text)[1] })
             except Exception as e:
                 e.__traceback__
                 error = True
@@ -76,8 +76,8 @@ def set_up_server(app: Union[Flask, str], static_dir: Optional[str] = None):
                 for file in request.files.getlist(filelist):
                     try:
                         job_files.append((file.filename, parse_file(file)))
-                    except IOError:
-                        job_files.append((file.filename, None))
+                    except IOError as e:
+                        job_files.append((file.filename, e))
 
             job_id: str = generate_job_id()
             while job_id in jobs:

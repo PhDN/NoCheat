@@ -1,23 +1,7 @@
 from werkzeug.datastructures import FileStorage
 from PyPDF2 import PdfFileReader
 from model import GPT2PPL
-import docx
-
-ALLOWED_EXTENSIONS = {'txt', 'docx', 'pdf'}
-
-
-def file_type(filename: str) -> str:
-    """
-    :param filename A string with the name of the file
-    :raise: IOError if the file is not one of the allowed filetypes
-    :return: A string with the file extension
-    """
-    if '.' in filename:
-        extension = filename.rsplit('.', 1)[1].lower()
-        if extension in ALLOWED_EXTENSIONS:
-            return extension
-    raise IOError("Not a text file. Input must be a txt, pdf, or docx file.")
-
+import magic #, docx
 
 def parse_file(file: FileStorage) -> str:
     """
@@ -26,18 +10,22 @@ def parse_file(file: FileStorage) -> str:
     :raises IOError when file is not a document file
     :return: A string containing the text from the document
     """
-    filetype = file_type(file.filename)
     text = ""
-    if filetype == "txt":
+    filetype = magic.from_buffer(file.stream.read(2048), mime = True)
+    file.stream.seek(0)
+    if filetype == "text/plain":
         text = file.stream.read()
-    elif filetype == "pdf":
+    elif filetype == "application/pdf":
         reader = PdfFileReader(file.stream)
         for page in reader.pages:
             text = text + page.extractText()
+#     elif filetype == "application/vnd.openxmlformats-officedocument.wordprocessingml.document":
+#         doc = docx.Document(file.stream)
+#         for p in doc.paragraphs:
+#             text = text + p.text
     else:
-        doc = docx.Document(file.stream)
-        for p in doc.paragraphs:
-            text = text + p.text
+        raise IOError(f"Invalid file type {filetype}. File must be plaintext or a PDF.")
+
     return text
 
 

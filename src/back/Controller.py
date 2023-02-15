@@ -52,16 +52,16 @@ class Controller:
     website backend so that it can be displayed.
     """
 
-    instance = None
+    __instance = None
 
     @staticmethod
     def get_instance():
-        if Controller.instance is None:
+        if Controller.__instance is None:
             Controller()
-        return Controller.instance
+        return Controller.__instance
 
     def __init__(self):
-        Controller.instance = self
+        Controller.__instance = self
 
     def process_file(self, file: FileStorage):
         """

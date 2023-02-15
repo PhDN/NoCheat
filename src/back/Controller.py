@@ -52,13 +52,16 @@ class Controller:
     website backend so that it can be displayed.
     """
 
-    def __new__(cls):
-        """
-        Returns the controller object, of which there is only one instance.
-        """
-        if not hasattr(cls, 'instance'):
-            cls.instance = super(Controller, cls).__new__(cls)
-        return cls.instance
+    instance = None
+
+    @staticmethod
+    def get_instance():
+        if Controller.instance is None:
+            Controller()
+        return Controller.instance
+
+    def __init__(self):
+        Controller.instance = self
 
     def process_file(self, file: FileStorage):
         """
@@ -72,7 +75,7 @@ class Controller:
         model = GPT2PPL()
         # Feature extraction where convert text to relevant data
         result = model(text) # Model step where checks if text AI or not
-        
+
         return self.analyze_results(result)
 
     def analyze_results(self, results):

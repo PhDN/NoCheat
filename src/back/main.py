@@ -34,7 +34,7 @@ def set_up_server(app: Union[Flask, str], static_dir: Optional[str] = None):
         return ''.join(map(lambda x: hex(x)[2:].zfill(2), randbytes(16)))
 
     def exec_job(job_id: str, files: List[FileStorage]):
-        controller = Controller()
+        controller = Controller.get_instance()
         results = []
         error = False
 

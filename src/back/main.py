@@ -98,7 +98,7 @@ def set_up_server(app: Union[Flask, str], static_dir: Optional[str] = None):
         done = futures.wait([ jobs[job] ], timeout = request.args.get('timeout', type = float))
         if len(done.not_done) > 0:
             return api_response({ 'message': "Timeout expired" }, 408)
-        elif jobs[job].cancelled():
+        elif job not in jobs or jobs[job].cancelled():
             return api_response({ 'message': f"Job {job} has been cancelled" }, 410)
         else:
             result = jobs[job].result()

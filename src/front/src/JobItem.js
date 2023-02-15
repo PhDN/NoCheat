@@ -12,16 +12,19 @@ import './JobItem.css';
  * }} props
  */
 export default function JobItem({ id, documents, remove, status, update }) {
+    let removed = false;
     useEffect(() => {
         if (status !== 'waiting') return;
 
         fetch(`/api/job/${id}/query`).then(async response => {
             const { data: { status: newStatus } } = await response.json();
+            if (removed) return;
             if (status !== newStatus && newStatus !== 'complete')
                 return await update({ status: newStatus, documents });
 
             response = await fetch(`/api/job/${id}`);
             const { data: rec } = await response.json();
+            if (removed || response.status === 410) return;
             update(rec);
         });
     }, [ status ]);
@@ -30,7 +33,11 @@ export default function JobItem({ id, documents, remove, status, update }) {
         <div className="banner">
             Job {id}
             {status === 'waiting' ?
-                <button>Cancel</button> :
+                <button onClick={() => {
+                    removed = true;
+                    fetch(`/api/job/${id}`, { method: 'DELETE' });
+                    remove();
+                }}>Cancel</button> :
                 <button onClick={remove}>Delete</button>}
         </div>
         <ul>{documents.map(({ name, status }, index) =>

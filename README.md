@@ -5,7 +5,7 @@ Weekly progress reports are contained in the reports directory.
 
 ## Running the File
 
-First, install [Anaconda](https://www.anaconda.com/download) and set up the Python environment using the command `conda env create --file=env.yml`.
+First, install [Anaconda](https://www.anaconda.com/download) and set up the Python environment using the command `conda env create --file=environment.yml'. If you already have the environment installed and need to update, run the command 'conda env update'.
 
 Next, install [Node & NPM](https://docs.npmjs.com/cli/v9/configuring-npm/install) and run the command `npm --prefix src/front ci` to install the frontend's dependencies. Then, you can run `npm --prefix src/front run build` to build the React app.
 

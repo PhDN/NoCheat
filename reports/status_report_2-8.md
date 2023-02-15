@@ -1,11 +1,11 @@
-# Status Report 2/6
+# Status Report 2/8
 ## Team Report
 #### Previous Goals
 We want to finish setting up the basic framework of our project and begin working on the testing and CI elements of the project.
 #### Progress
 We set up a rudimentary testing framework, added the sections to the Living Doc, and submitted the assigment. Rough versions of the docs for the controller exist, and implementation of the front end continues.
 #### New Goals
-
+We want to have a working beta by 2/14, and should have revised the Living Doc for submission with it. We also need to make the slides for the presentation.
 
 ## Individual Reports
 

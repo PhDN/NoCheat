@@ -1,6 +1,6 @@
 from werkzeug.datastructures import FileStorage
 from PyPDF2 import PdfFileReader
-from src.back.model import GPT2PPL
+from model import GPT2PPL
 import docx
 
 ALLOWED_EXTENSIONS = {'txt', 'docx', 'pdf'}

@@ -70,12 +70,7 @@ class Controller:
         :raises Exception
         :return:
         """
-        # initialize the model
-        model = GPT2PPL()
-        # Feature extraction where convert text to relevant data
-        result = model(text) # Model step where checks if text AI or not
-
-        return self.analyze_results(result)
+        return GPT2PPL()(text) # Model step where checks if text AI or not
 
     def process_file(self, file: FileStorage):
         """
@@ -84,7 +79,7 @@ class Controller:
         :raises Exception
         :return:
         """
-        return process_text(parse_file(file))
+        return self.analyze_results(process_text(parse_file(file)))
 
     def analyze_results(self, results):
         """

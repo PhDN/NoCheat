@@ -41,7 +41,7 @@ def set_up_server(app: Union[Flask, str], static_dir: Optional[str] = None):
         for filename, text in files:
             try:
                 if text is not None:
-                    results.append({ 'name': filename, 'status': controller.process_text(text) })
+                    results.append({ 'name': filename, 'status': controller.process_text(text)[1] })
                 else:
                     results.append({ 'name': filename, 'status': 'Invalid file format' })
             except Exception as e:

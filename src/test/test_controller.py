@@ -12,7 +12,7 @@ class TestController(TestCase):
     def test_parse_fileTxt(self):
         with open("lipsum.txt") as t:
             file = FileStorage(stream=t, filename="lipsum.txt")
-        self.assertEquals(testText, c.parse_file(file))
+            self.assertEquals(testText, c.parse_file(file))
 
     def test_analyze_results(self):
         assert True

@@ -14,7 +14,7 @@ def parse_file(file: FileStorage) -> str:
     filetype = magic.from_buffer(file.stream.read(2048), mime = True)
     file.stream.seek(0)
     if filetype == "text/plain":
-        text = file.stream.read()
+        text = file.stream.read().decode('utf-8')
     elif filetype == "application/pdf":
         reader = PdfFileReader(file.stream)
         for page in reader.pages:

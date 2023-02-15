@@ -2,7 +2,10 @@ import { useState } from 'react';
 import DocumentStore from './DocumentStore';
 import DocumentsForm from './DocumentsForm';
 import EditModal from './EditModal';
+import JobStore from './JobStore';
+
 import useDocumentStore from './utils/documentStore';
+import useJobsStore from './utils/jobsStore';
 
 import JobsList from './JobsList';
 
@@ -16,14 +19,16 @@ export default function App() {
     }
 
     return <DocumentStore.Provider value={useDocumentStore()}>
-        <div className="App">
-            <nav>NoCheat</nav>
-            <main>
-                <DocumentsForm openEditModal={openEditModal} />
-                <JobsList />
-                {editing !== null && <EditModal id={editing} close={setEditing.bind(null, null)} />}
-            </main>
-            <footer>&#169; 2023 | NoCheat Group</footer>
-        </div>
+        <JobStore.Provider value={useJobsStore()}>
+            <div className="App">
+                <nav>NoCheat</nav>
+                <main>
+                    <DocumentsForm openEditModal={openEditModal} />
+                    <JobsList />
+                    {editing !== null && <EditModal id={editing} close={setEditing.bind(null, null)} />}
+                </main>
+                <footer>&#169; 2023 | NoCheat Group</footer>
+            </div>
+        </JobStore.Provider>
     </DocumentStore.Provider>;
 }

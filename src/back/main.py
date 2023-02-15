@@ -1,4 +1,5 @@
-import os, argparse, asyncio
+import os, argparse, asyncio, traceback
+from concurrent import futures
 from concurrent.futures import CancelledError, Future, ThreadPoolExecutor, TimeoutError
 from random import randbytes
 from typing import Any, Mapping, List, Optional, Tuple, Union
@@ -6,6 +7,8 @@ from typing import Any, Mapping, List, Optional, Tuple, Union
 from flask import Flask, json, request, Response, send_from_directory
 from werkzeug.exceptions import HTTPException, BadRequest, Conflict, MethodNotAllowed, NotFound, UnsupportedMediaType
 from werkzeug.datastructures import BytesIO, FileStorage
+
+from Controller import Controller
 
 def set_up_server(app: Union[Flask, str], static_dir: Optional[str] = None):
     if isinstance(app, str):
@@ -30,9 +33,23 @@ def set_up_server(app: Union[Flask, str], static_dir: Optional[str] = None):
     def generate_job_id() -> str:
         return ''.join(map(lambda x: hex(x)[2:].zfill(2), randbytes(16)))
 
-    def exec_job(job_id: str, files: List[FileStorage]) -> Tuple[str]:
-        # TODO: Process files
-        return job_id,
+    def exec_job(job_id: str, files: List[FileStorage]):
+        controller = Controller()
+        results = []
+        error = False
+
+        for file in files:
+            try:
+                results.append({ 'name': file.filename, 'status': controller.process_file(file) })
+            except IOError:
+                results.append({ 'name': file.filename, 'status': 'Invalid file format' })
+            except Exception:
+                print(traceback.format_exc())
+                error = True
+                results.append({ 'name': file.filename, 'status': 'Something went terribly wrong' })
+            print(type(file), dir(file.stream), results)
+
+        return { 'status': 'error' if error else 'complete', 'documents': results }
 
     @app.route('/', defaults = {'path': ''})
     @app.route('/<path:path>')
@@ -74,15 +91,15 @@ def set_up_server(app: Union[Flask, str], static_dir: Optional[str] = None):
         if job not in jobs:
             raise NotFound(f'Job {job} has been cancelled or does not exist')
 
-        try:
-            result = jobs[job].result(request.args.get('timeout', None, type = int))
-            # TODO: Populate with job completion
-            del jobs[job]
-            return api_response({})
-        except CancelledError:
-            return api_response({ 'message': f"Job {job} has been cancelled" }, 410)
-        except TimeoutError:
+        done = futures.wait([ jobs[job] ], timeout = request.args.get('timeout', type = float))
+        if len(done.not_done) > 0:
             return api_response({ 'message': "Timeout expired" }, 408)
+        elif jobs[job].cancelled():
+            return api_response({ 'message': f"Job {job} has been cancelled" }, 410)
+        else:
+            result = jobs[job].result()
+            del jobs[job]
+            return api_response({ 'data': result })
 
     @app.route('/api/job/<job>', methods = ['DELETE'])
     def api_cancel_job(job: str):
@@ -102,10 +119,11 @@ def set_up_server(app: Union[Flask, str], static_dir: Optional[str] = None):
         """Query job status."""
 
         if job not in jobs:
-            raise NotFound(f'Job {job} does not exist')
+            return api_response({ 'data': { 'status': 'cancelled' } }, 404)
+        elif jobs[job].cancelled():
+            return api_response({ 'data': { 'status': 'cancelled' } })
         else:
-            # TODO: wait until job is completed
-            return api_response({})
+            return api_response({ 'data': { 'status': 'complete' if jobs[job].done() else 'waiting' } })
 
     @app.errorhandler(400)
     def error_400(error):

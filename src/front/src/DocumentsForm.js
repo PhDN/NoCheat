@@ -1,6 +1,7 @@
 import { useContext, useState } from "react";
 import DocumentItem from "./DocumentItem";
 import DocumentStore from "./DocumentStore";
+import JobStore from "./JobStore";
 
 import './DocumentsForm.css';
 import del from './delete.svg';
@@ -12,6 +13,7 @@ import send from './send.svg';
  */
 export default function DocumentsForm({ openEditModal }) {
     const [docs, { add, clear, remove, update }] = useContext(DocumentStore);
+    const [, { add: addJob }] = useContext(JobStore);
     const [id] = useState(Math.random().toString(16).substring(2));
     const [loading, setLoading] = useState(false);
 
@@ -32,7 +34,7 @@ export default function DocumentsForm({ openEditModal }) {
                 if (status !== 200)
                     throw new Error(`${status}: ${message}`);
 
-                console.log(job); // TODO: Display job in jobs list
+                addJob(job, ...docs.map(({ name }) => name));
                 await clear();
             } catch (e) {
                 window.alert(`Error submitting documents:\n${e}`)
@@ -49,7 +51,7 @@ export default function DocumentsForm({ openEditModal }) {
                 update={update.bind(null, id, document)} />)}
         <label htmlFor={`file-${id}`}>Insert files to submit here</label>
         <input
-            accept=".pdf,application/pdf,application/x-pdf,.md,.markdown,.mdown,.markdn,text/markdown,.txt,text/plain"
+            accept=".pdf,application/pdf,application/x-pdf,.docx,application/vnd.openxmlformats-officedocument.wordprocessingml.document,.txt,text/plain"
             id={`file-${id}`}
             disabled={loading}
             multiple

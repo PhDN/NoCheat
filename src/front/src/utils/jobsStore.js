@@ -52,26 +52,29 @@ import { useEffect, useState } from "react";
 
 /**
  * @typedef {{
- *  document: Blob;
- *  id: number;
- *  name: string;
- * }} DocumentStoreItem
+ *  id: string;
+ *  status: string;
+ *  documents: {
+ *      name: string;
+ *      status: string;
+ *  }[];
+ * }} JobStoreItem
  */
 
 /**
  * @typedef {{
- *  documents: DocumentStoreItem
- * }} DocumentStoreMap
+ *  jobs: JobStoreItem
+ * }} JobStoreMap
  */
 
 /**
  * @typedef {{
- *  add(...documents: (Blob | string)[]): Promise<void>;
+ *  add(id: string, ...documents: string[]): Promise<void>;
  *  clear(): Promise<void>;
- *  get(id: number): Promise<DocumentStoreItem>;
- *  remove(id: number): Promise<void>;
- *  update(id: number, document: Blob, name: string): Promise<void>;
- * }} DocumentStoreApi
+ *  get(id: string): Promise<JobStoreItem>;
+ *  remove(id: string): Promise<void>;
+ *  update(id: string, data: JobStoreItem): Promise<void>;
+ * }} JobStoreApi
  */
 
 /**
@@ -87,101 +90,73 @@ const promisifyIdbRequest = req => new Promise((resolve, reject) => {
 
 /**
  * @param {string} [storeName] Name of the document store to use
- * @returns {[DocumentStoreItem[] | null, DocumentStoreApi]}
+ * @returns {[JobStoreItem[] | null, JobStoreApi]}
  */
-export default function useDocumentStore(storeName = 'documents') {
-    const [db, setDb] = useState(/** @type {TypedIDBDatabase<DocumentStoreMap>?} */ (null));
-    const [docs, setDocs] = useState(/** @type {DocumentStoreItem[]} */([]));
+export default function useJobsStore(storeName = 'jobs') {
+    const [db, setDb] = useState(/** @type {TypedIDBDatabase<JobStoreMap>?} */ (null));
+    const [jobs, setJobs] = useState(/** @type {JobStoreItem[]} */([]));
 
     useEffect(() => {
         if (db) return;
 
         const req = indexedDB.open(storeName);
         req.onupgradeneeded = () => {
-            const objStore = (/** @type {TypedIDBDatabase<DocumentStoreMap>} */ (req.result)).createObjectStore(storeName, {
-                keyPath: 'id',
-                autoIncrement: true
+            (/** @type {TypedIDBDatabase<JobStoreMap>} */ (req.result)).createObjectStore(storeName, {
+                keyPath: 'id'
             });
-            objStore.createIndex('names', 'name');
         };
 
-        promisifyIdbRequest(req).then(async (/** @type {TypedIDBDatabase<DocumentStoreMap>} */ db) => {
-            const docs = await promisifyIdbRequest(
+        promisifyIdbRequest(req).then(async (/** @type {TypedIDBDatabase<JobStoreMap>} */ db) => {
+            const jobs = await promisifyIdbRequest(
                 db.transaction([storeName], 'readonly').objectStore(storeName).getAll());
-            
+
             setDb(db);
-            setDocs(docs);
+            setJobs(jobs);
         });
 
         return () => (db && db.close());
     }, [db, storeName]);
 
-    /** @type {(x: unknown) => x is string} */
-    function isString(x) {
-        return typeof x == 'string' || x instanceof String;
-    }
-
-    return [db ? docs : db, {
-        async add(...documents) {
-            if (!db) throw new Error('Document store not open');
-
-            let n = await promisifyIdbRequest(db.transaction([storeName], 'readonly').objectStore(storeName).count());
-            let makeDocName = () => 'doc' + n++;
+    return [db ? jobs : db, {
+        async add(id, ...documents) {
+            if (!db) throw new Error('Job store not open');
 
             const objStore = db.transaction([storeName], 'readwrite').objectStore(storeName);
-            const newDocs = [ ...docs ], /** @type {Promise<IDBValidKey>[]} */ ids = [];
+            const newJob = {
+                id,
+                status: 'waiting',
+                documents: documents.reduce((prev, name) => ([ ...prev, {
+                    name, status: ''
+                }]), [])
+            };
 
-            let skip;
-            documents.forEach((document, i) => {
-                if (skip) {
-                    skip = 0;
-                    return;
-                }
-
-                const item = {
-                    document: isString(document) ?
-                        new Blob([document], { type: 'text/plain' }) :
-                        document,
-                    name: document instanceof File ?
-                        document.name :
-                        isString(documents[i+1]) ?
-                        /** @type {string} */ ((skip = 1), documents[++i]) :
-                        makeDocName()
-                };
-                newDocs.push(item);
-                ids.push(promisifyIdbRequest(objStore.add(item)));
-            });
-
-            (await Promise.all(ids)).forEach((id, i) => {
-                newDocs[docs.length + i].id = id;
-            });
-
-            setDocs(newDocs);
+            await promisifyIdbRequest(objStore.add(newJob));
+            setJobs([ ...jobs, newJob ]);
         },
 
         async clear() {
             if (!db) return;
             await promisifyIdbRequest(db.transaction([storeName], 'readwrite').objectStore(storeName).clear());
-            setDocs([]);
+            setJobs([]);
         },
 
         get(id) {
-            if (!db) throw new Error('Document store not open');
+            if (!db) throw new Error('Job store not open');
             return promisifyIdbRequest(db.transaction([storeName], 'readonly').objectStore(storeName).get(id));
         },
 
         async remove(id) {
-            if (!db) throw new Error('Document store not open');
+            if (!db) throw new Error('Job store not open');
             await promisifyIdbRequest(db.transaction([storeName], 'readwrite').objectStore(storeName).delete(id));
-            setDocs(docs.filter(({id: itemId}) => itemId !== id));
+            setJobs(jobs.filter(({id: itemId}) => itemId !== id));
         },
 
-        async update(id, document, name) {
-            if (!db) throw new Error('Document store not open');
+        async update(id, newRecord) {
+            if (!db) throw new Error('Job store not open');
 
-            const newRecord = { id, document, name };
+            newRecord = { ...newRecord, id };
             await promisifyIdbRequest(db.transaction([storeName], 'readwrite').objectStore(storeName).put(newRecord));
-            setDocs(docs.map(record => record.id === id ? newRecord : record));
+            setJobs(jobs.map(record => record.id === id ? newRecord : record));
         }
     }];
 }

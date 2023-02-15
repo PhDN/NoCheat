@@ -1,0 +1,37 @@
+.JobItem {
+    display: block;
+    margin-top: 8px;
+    text-align: left;
+    width: 100%;
+}
+.JobItem > ul {
+    color: black;
+    margin: 0;
+}
+.JobItem > .banner {
+    padding: 4px 0;
+}
+.JobItem > .banner > button {
+    float: right;
+}
+
+.JobItem.waiting > .banner {
+    background-color: darkgoldenrod;
+}
+.JobItem.waiting {
+    background-color: #cc0;
+}
+.JobItem.complete {
+    background-color: #00a400;
+}
+.JobItem.complete > .banner {
+    background-color: green;
+}
+.JobItem.cancelled,
+.JobItem.error {
+    background-color: #e00;
+}
+.JobItem.cancelled > .banner,
+.JobItem.error > .banner {
+    background-color: darkred;
+}

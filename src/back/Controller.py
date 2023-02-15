@@ -26,15 +26,13 @@ def parse_file(file: FileStorage):
     :raises IOError when file is not a document file
     :return: A string containing the text from the document
     """
-    try:
-        filetype = file_type(file.filename)
-    except IOError:
-        pass
+    filetype = file_type(file.filename)
+    print(file.stream.closed, dir(file.stream))
     text = ""
     if filetype == "txt":
         text = file.stream.read()
     elif filetype == "pdf":
-        reader = PdfFileReader(file.stream.read())
+        reader = PdfFileReader(file.stream)
         for page in reader.pages:
             text = text + page.extractText()
     else:

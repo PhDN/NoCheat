@@ -7,6 +7,10 @@
 .JobItem > ul {
     color: black;
     margin: 0;
+    padding: 8px;
+}
+.JobItem > ul > li {
+    margin-left: 1em;
 }
 .JobItem > .banner {
     padding: 4px 0;

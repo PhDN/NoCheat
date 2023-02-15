@@ -19,7 +19,7 @@ def file_type(filename: str) -> str:
     raise IOError("Not a text file. Input must be a txt, pdf, or docx file.")
 
 
-def parse_file(file: FileStorage):
+def parse_file(file: FileStorage) -> str:
     """
     Takes a text file and moves text into data structure.
     :param file: File to be parsed, must be a document
@@ -62,6 +62,20 @@ class Controller:
 
     def __init__(self):
         Controller.__instance = self
+    
+    def process_text(self, text: str):
+        """
+        Takes a string and returns the results of human-AI check
+        :param file:
+        :raises Exception
+        :return:
+        """
+        # initialize the model
+        model = GPT2PPL()
+        # Feature extraction where convert text to relevant data
+        result = model(text) # Model step where checks if text AI or not
+
+        return self.analyze_results(result)
 
     def process_file(self, file: FileStorage):
         """
@@ -70,13 +84,7 @@ class Controller:
         :raises Exception
         :return:
         """
-        text = parse_file(file)
-        # initialize the model
-        model = GPT2PPL()
-        # Feature extraction where convert text to relevant data
-        result = model(text) # Model step where checks if text AI or not
-
-        return self.analyze_results(result)
+        return process_text(parse_file(file))
 
     def analyze_results(self, results):
         """

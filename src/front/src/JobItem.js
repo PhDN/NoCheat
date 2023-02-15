@@ -22,7 +22,6 @@ export default function JobItem({ id, documents, remove, status, update }) {
 
             response = await fetch(`/api/job/${id}`);
             const { data: rec } = await response.json();
-            console.log(rec);
             update(rec);
         });
     }, [ status ]);
@@ -35,7 +34,7 @@ export default function JobItem({ id, documents, remove, status, update }) {
                 <button onClick={remove}>Delete</button>}
         </div>
         <ul>{documents.map(({ name, status }, index) =>
-            <li key={index}>{name} {status}</li>
+            <li key={index}><em>{name}</em>{status && `: ${status}`}</li>
         )}</ul>
     </div>;
 }

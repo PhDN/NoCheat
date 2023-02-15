@@ -8,7 +8,7 @@ from flask import Flask, json, request, Response, send_from_directory
 from werkzeug.exceptions import HTTPException, BadRequest, Conflict, MethodNotAllowed, NotFound, UnsupportedMediaType
 from werkzeug.datastructures import BytesIO, FileStorage
 
-from Controller import Controller
+from Controller import parse_file, Controller
 
 def set_up_server(app: Union[Flask, str], static_dir: Optional[str] = None):
     if isinstance(app, str):
@@ -38,15 +38,17 @@ def set_up_server(app: Union[Flask, str], static_dir: Optional[str] = None):
         results = []
         error = False
 
-        for file in files:
+        for filename, text in files:
             try:
-                results.append({ 'name': file.filename, 'status': controller.process_file(file) })
-            except IOError:
-                results.append({ 'name': file.filename, 'status': 'Invalid file format' })
-            except Exception:
-                print(traceback.format_exc())
+                if text is not None:
+                    results.append({ 'name': filename, 'status': controller.process_text(text) })
+                else:
+                    results.append({ 'name': filename, 'status': 'Invalid file format' })
+            except Exception as e:
+                e.__traceback__
                 error = True
-                results.append({ 'name': file.filename, 'status': 'Something went terribly wrong' })
+                print(f'Error for file {filename} in job {job_id}:', traceback.format_exc())
+                results.append({ 'name': filename, 'status': f'500 {e}' })
 
         return { 'status': 'error' if error else 'complete', 'documents': results }
 
@@ -72,7 +74,10 @@ def set_up_server(app: Union[Flask, str], static_dir: Optional[str] = None):
             job_files = []
             for filelist in request.files:
                 for file in request.files.getlist(filelist):
-                    job_files.append(file)
+                    try:
+                        job_files.append((file.filename, parse_file(file)))
+                    except IOError:
+                        job_files.append((file.filename, None))
 
             job_id: str = generate_job_id()
             while job_id in jobs:

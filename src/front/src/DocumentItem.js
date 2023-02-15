@@ -26,7 +26,6 @@ export default function DocumentItem({ name, document, openEditModal, remove, up
             </Document>}
         <div title={name}>{name}</div>
         <span className="edit" title="Edit" onClick={() => {
-            console.log(isPdf(document));
             if (isPdf(document)) {
                 let newName = window.prompt(`Change name of ${name}:`, name);
                 newName && update(newName);

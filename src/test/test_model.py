@@ -13,7 +13,7 @@ model = GPT2PPL()
 # sentence = "\n".join(contents)
 
 # open text file in read mode
-text_file = open('test.txt', 'r')
+text_file = open('data/test.txt', 'r')
 # read whole file to a string
 text = text_file.read()
 # close file

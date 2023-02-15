@@ -27,7 +27,6 @@ def parse_file(file: FileStorage):
     :return: A string containing the text from the document
     """
     filetype = file_type(file.filename)
-    print(file.stream.closed, dir(file.stream))
     text = ""
     if filetype == "txt":
         text = file.stream.read()

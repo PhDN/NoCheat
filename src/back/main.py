@@ -47,7 +47,6 @@ def set_up_server(app: Union[Flask, str], static_dir: Optional[str] = None):
                 print(traceback.format_exc())
                 error = True
                 results.append({ 'name': file.filename, 'status': 'Something went terribly wrong' })
-            print(type(file), dir(file.stream), results)
 
         return { 'status': 'error' if error else 'complete', 'documents': results }
 

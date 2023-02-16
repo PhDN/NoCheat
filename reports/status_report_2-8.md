@@ -46,23 +46,18 @@ I need to add the controller and test to the README as well as finish implementi
 ### Phuong Duy Nguyen
 
 #### Previous Goals
-    - Explore which ML based approaches can work for this problem, maybe there are non neural network approaches like SVM or k-means that could work.
-
-#### Progress
-    - Contributed to this week's assignment and Living Document:
-        - Detailed risks and assement of risks
-        - Added Coding Guidelines
-        - Reorganized Living document to update to new assignment
-    - Determined that 
-    - Started a Google Colab to implement text perplexity and bursiness calculation
-    - Explored various ML models that can fit the project:
-        - OpenAI's Roberta base model to detect GPT-2's output, can be found on HuggingFace
-        - Using the Giant Language model Test Room (GLTR) tool
-
-#### New Goals
     - Finish the implementation for text perplexity and bursiness calculation
     - Discuss and finalize chosen ML model for the project
     - Get started on implementing the chosen ML model (reimplemtation of existing model or integration using an API).
+
+#### Progress
+    - Contributed to this week's assignment and Living Document:
+        - Help outline testing plan for backend infrastructure
+    - Finish the implementation of text perplexity and bursiness calculation using OpenAi's GPT-2 model via HuggingFace API. This will serve as a core competency for the project to meet the minimum viable product requirement.
+
+#### New Goals
+    - Test the implementation of the model against human-generated and AI- generated texts.
+    - Help to integrate the model with the controller and front-end component for next week's beta release.
 
 ### Simon Struthers
 

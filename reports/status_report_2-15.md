@@ -42,13 +42,18 @@ I want to build on what is already there, specifically, I want to get DOCX and D
 ### Phuong Duy Nguyen
 
 #### Previous Goals
-        - Finish the implementation for text perplexity and bursiness calculation
-    - Discuss and finalize chosen ML model for the project
-    - Get started on implementing the chosen ML model (reimplemtation of existing model or integration using an API).
+    - Test the implementation of the model against human-generated and AI- generated texts.
+    - Help to integrate the model with the controller and front-end component for next week's beta release.
 
 #### Progress
+    - Verified that the model works on a small dataset of text documents, included in in src/test.
+    - Succesfully integreated the model with the controller, which was intergrated with the front-end API by Simon and Dylan.
+    - Worked on the presentation and video recording for beta release report.
 
 #### New Goals
+    - Work together to integrate the display output metrics of the model on input text document through the controller and front-end UI.
+    - Explore new model aproach using open-sourced implementation of GLTR, or DetectGPT
+    - Integrate open-sourced implementation of chosen model via Hugging Face API or self-implement.
 
 
 ### Simon Struthers

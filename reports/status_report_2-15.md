@@ -58,8 +58,11 @@ I want to build on what is already there, specifically, I want to get DOCX and D
 2. Finish submission listings
 
 #### Progress
+I've managed to complete the minimum viable product for both the document submission form and the job submission listings, as well as fix some backend bugs relating to queuing jobs and errors in the model's calculations.
 
 #### New Goals
+1. Start writing tests for the frontend.
+2. Frontend quality-of-life improvements; e.g. word wrap toggle, text file preview
 
 ### Muhammad Ammar
 

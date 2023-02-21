@@ -19,6 +19,7 @@ def parse_file(file: FileStorage) -> str:
         reader = PdfFileReader(file.stream)
         for page in reader.pages:
             text = text + page.extractText()
+        text = text.strip()
 #     elif filetype == "application/vnd.openxmlformats-officedocument.wordprocessingml.document":
 #         doc = docx.Document(file.stream)
 #         for p in doc.paragraphs:

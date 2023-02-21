@@ -19,6 +19,11 @@ class TestController(TestCase):
             file = FileStorage(stream=t, filename="data/lipsum.pdf")
             self.assertEquals(testText, c.parse_file(file))
 
+    def test_parse_fileDocx(self):
+        with open("data/lipsum.docx", 'rb') as t:
+            file = FileStorage(stream=t, filename="data/lipsum.docx")
+            self.assertEquals(testText, c.parse_file(file))
+
     def test_analyze_results(self):
         assert True
 

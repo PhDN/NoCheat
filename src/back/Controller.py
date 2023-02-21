@@ -1,7 +1,13 @@
 from werkzeug.datastructures import FileStorage
 from PyPDF2 import PdfFileReader
 from model import GPT2PPL
-import magic #, docx
+import magic
+import docx
+import tempfile
+
+DOC_FILETYPES = {"application/vnd.openxmlformats-officedocument.wordprocessingml.document"} #,
+                 #"application/msword", "application/vnd.oasis.opendocument.text"}
+
 
 def parse_file(file: FileStorage) -> str:
     """
@@ -20,10 +26,12 @@ def parse_file(file: FileStorage) -> str:
         for page in reader.pages:
             text = text + page.extractText()
         text = text.strip()
-#     elif filetype == "application/vnd.openxmlformats-officedocument.wordprocessingml.document":
-#         doc = docx.Document(file.stream)
-#         for p in doc.paragraphs:
-#             text = text + p.text
+    elif filetype in DOC_FILETYPES:
+        tmp = tempfile.NamedTemporaryFile()
+        tmp.write(file.stream.read())
+        doc = docx.Document(tmp.name)
+        for p in doc.paragraphs:
+            text = text + p.text
     else:
         raise IOError(f"Invalid file type {filetype}. File must be plaintext or a PDF.")
 

@@ -12,7 +12,7 @@ DOC_FILETYPES = {"application/vnd.openxmlformats-officedocument.wordprocessingml
 def parse_file(file: FileStorage) -> str:
     """
     Takes a text file and moves text into data structure.
-    :param file: File to be parsed, must be a document
+    :param file: File to be parsed, must be a document (TXT, PDF, or DOCX)
     :raises IOError when file is not a document file
     :return: A string containing the text from the document
     """
@@ -33,7 +33,7 @@ def parse_file(file: FileStorage) -> str:
         for p in doc.paragraphs:
             text = text + p.text
     else:
-        raise IOError(f"Invalid file type {filetype}. File must be plaintext or a PDF.")
+        raise IOError(f"Invalid file type {filetype}. File must be plaintext, DOCX, or a PDF.")
 
     return text
 
@@ -53,6 +53,9 @@ class Controller:
 
     @staticmethod
     def get_instance():
+        """
+        Returns the Controller so that user can access.
+        """
         if Controller.__instance is None:
             Controller()
         return Controller.__instance
@@ -63,25 +66,24 @@ class Controller:
     def process_text(self, text: str):
         """
         Takes a string and returns the results of human-AI check
-        :param file:
-        :raises Exception
-        :return:
+        :param text: A string which is to be analyzed
+        :return: Results of analysis
         """
         return GPT2PPL()(text) # Model step where checks if text AI or not
 
     def process_file(self, file: FileStorage):
         """
         Takes a text file and returns the results of human-AI check
-        :param file:
-        :raises Exception
-        :return:
+        :param file: The file to be processed
+        :raises IOError if the file is not one of the accepted types (TXT, DOCX, PDF)
+        :return: The analysis results formatted for usage by frontend.
         """
-        return self.analyze_results(process_text(parse_file(file)))
+        return self.analyze_results(self.process_text(parse_file(file)))
 
     def analyze_results(self, results):
         """
         Converts the raw results into data to be displayed on frontend
-        :param results:
-        :return:
+        :param results: The raw result data from the model
+        :return: The data in format usable by front end
         """
         return results[0]["label"]

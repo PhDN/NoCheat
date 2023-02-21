@@ -3,7 +3,10 @@ NoCheat is a web application and machine learning algorithm that allows for the 
 
 Weekly progress reports are contained in the reports directory.
 
-## Running the File
+## Other pages
+- [Developer Documentation](devdocs.md)
+
+## Self-Hosting Instructions
 
 First, install [Anaconda](https://www.anaconda.com/download) and set up the Python environment using the command `conda env create --file=environment.yml'. Solving the environment may take awhile to complete on a new system. If you already have the environment installed and need to update, run the command 'conda env update'. Then, the environment needs to either be set as the interpreter within an IDE or the command 'conda activate nocheat' must be used before running the project in the command line interface.
 

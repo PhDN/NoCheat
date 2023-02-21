@@ -77,4 +77,8 @@ Think of ways to compare AI generated and human written essays. We will need som
 
 ### Progress
 
+Set up files to generate AI essays. Created a parsing algorithm to parse through human and AI essay and compare similarities. Worked for essays that had some matching sentences. Due to merge conflicts, the code was not pushed and with the new model, we might not need it.
+
 ### New Goals
+
+Fix my git issues so my commits show under my name. Follow the documentation to get a working demo on my end. 

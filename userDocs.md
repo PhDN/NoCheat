@@ -17,7 +17,7 @@ Our model will parse through the files and return a message declaring if the tex
 In some cases, model might require more information in order to make a decision.
 
 ## How to report a bug
-To report a bug, use this template:
+To report a bug, use github Issues with the following template:
 - [Bug report template](bugReportTemplate.md)
 
 ## Known bugs

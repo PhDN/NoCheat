@@ -5,6 +5,7 @@ Weekly progress reports are contained in the reports directory.
 
 ## Other pages
 - [Developer Documentation](devdocs.md)
+- [User Documentation](userDocs.md)
 
 ## Self-Hosting Instructions
 

@@ -11,8 +11,9 @@ import './JobItem.css';
  *  update(data: import('./utils/jobsStore.js').JobStoreItem): Promise<void>;
  * }} props
  */
-export default function JobItem({ id, documents, remove, status, update }) {
+export default function JobItem({ documents, id, remove, status, update }) {
     let removed = false;
+
     useEffect(() => {
         if (status !== 'waiting') return;
 
@@ -27,7 +28,7 @@ export default function JobItem({ id, documents, remove, status, update }) {
             if (removed || response.status === 410) return;
             update(rec);
         });
-    }, [ status ]);
+    }, [ documents, id, removed, status, update ]);
 
     return <div className={`JobItem ${status}`}>
         <div className="banner">

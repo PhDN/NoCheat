@@ -28,7 +28,6 @@ All source code used to implement, lay out, and develop NoCheat is available at 
 **NOTICE:** If you want to build or run the sever on Windows, you must do so using the [Windows Subsystem for Linux](https://learn.microsoft.com/en-us/windows/wsl/install). Follow the link for instructions as to how to set up a WSL instance, use a terminal into your WSL insance, and then follow the instructions below.
 
 ### 1. Install language tools
-
 The developer dependencies needed to build and start a NoCheat web server are [Python 3.10](https://www.python.org/downloads/), [Anaconda](https://www.anaconda.com/download), and [Node.js](https://nodejs.org/en/download/). Install these onto your system if they are not available.
 
 ### 2. Set up environment and install dependencies
@@ -45,10 +44,15 @@ Run the command `npm --prefix src/front run build` to build the website.
 Run the command `python src/back/main.py` to start the NoCheat server. The default port it serves its content from is 80, so for development purposes it may be more suitable to supply a `-p <port-number>` option to the aforementioned command.
 
 ## How to test the software
-Complete at least steps 1 and 2 for building the software, then run of the following commands:
+For running tests, complete at least steps 1 and 2 for building the software.
 
-- To test the backend, run `pytest src/test`.
-- To test the frontend, run `npm --prefix src/front run test`.
+### Backend tests
+Run `pytest src/test` from the root directory to perform backend tests.
+
+### Frontend tests
+If you have not previously run the frontend tests, run the command `npm --prefix src/front install --dev` to install the necessary frontend development dependencies.
+
+Afterward or otherwise, run `npm --prefix src/front run test` to perform frontend tests.
 
 ## How to add new tests
 Add files for testing `NoCheat` to the `src/test/data/` directory.

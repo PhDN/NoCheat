@@ -17,9 +17,10 @@ Get started with polishing the release & working on new features and quality-of-
 I want to build on what is already there, specifically, I want to get DOCX and DOC parsing working, as well as add to the result analysis fed back to the website. I also want to see if I can improve the file processing so that there are more features to process.
 
 #### Progress
+I had to modify my build setup so that it worked purely on the WSL subsystem. I fixed errors in some of the existing backend tests as well as implementing more. I got DOCX parsing working, and added to the documentation.
 
 #### New Goals
-
+I want to expand on the preprocessing so that more details are extracted, and I want to expand the result analysis fed back to the website.
 
 ### Alex Hugli
 

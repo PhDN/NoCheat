@@ -64,4 +64,8 @@ Fix my git issues so my commits show under my name. Follow the documentation to 
 
 ### Progress
 
+Fixed my git issues and was able to push code under my name.
+
 ### New Goals
+
+work on front-end to make things more user friendly

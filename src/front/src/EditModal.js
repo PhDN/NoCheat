@@ -15,6 +15,7 @@ export default function EditModal({ close, id }) {
     const [title, setTitle] = useState(/** @type {string?} */ (null));
     const [titleWidth, setTitleWidth] = useState(0);
     const [confirm, setConfirm] = useState(false);
+    const [wordWrap, setWordWrap] = useState(Number(localStorage.getItem('prefers-word-wrap')));
 
     const span = useRef(/** @type {HTMLSpanElement} */ (null));
     useEffect(() => {
@@ -64,9 +65,16 @@ export default function EditModal({ close, id }) {
             {confirm && '*'}
             <span ref={span}>{title}</span>
         </div>
-        <textarea onInput={event => {
+        <textarea className={wordWrap ? 'word-wrap' : ''} onInput={event => {
             setText(event.target.value);
             setConfirm(true);
         }} disabled={text === null} value={text ?? ''} />
+        <div className="settings">
+            <input type="checkbox" defaultChecked={!!wordWrap} id="word-wrap" onInput={() => {
+                localStorage.setItem('prefers-word-wrap', Number(!wordWrap));
+                setWordWrap(!wordWrap);
+            }} />
+            <label htmlFor="word-wrap">Word wrap</label>
+        </div>
     </div>;
 }

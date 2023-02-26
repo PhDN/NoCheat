@@ -48,8 +48,10 @@
     white-space: pre;
     visibility: hidden;
     position: absolute;
+    top: 0;
+    left: 0;
 }
-.EditModal > div > input {
+.EditModal > div > input[type="text"] {
     all: unset;
 
     background-color: #fff3;
@@ -76,4 +78,7 @@
     background-color: #111c;
 
     border-radius: 32px;
+}
+.EditModal > textarea.word-wrap {
+    white-space: pre-wrap;
 }

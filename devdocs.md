@@ -35,7 +35,9 @@ If you are setting up NoCheat for the first time, download this repository and o
 
 If you already have a NoCheat environment set up, and are pulling a newer or separate branch from the NoCheat repository, use the `conda env update` command to update the backend dependencies.
 
-After setting up the enviornment for running the code in the backend, run the command `npm --prefix src/front install` to install the dependencies for building the web page viewed in the frontend.
+Run the command `conda activate nocheat` to activate the newly set-up Python environment.
+
+Finally, run the command `npm --prefix src/front install` to install the dependencies for building the web page viewed in the frontend.
 
 ### 3. Building the frontend
 Run the command `npm --prefix src/front run build` to build the website.

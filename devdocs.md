@@ -31,7 +31,7 @@ All source code used to implement, lay out, and develop NoCheat is available at 
 The developer dependencies needed to build and start a NoCheat web server are [Python 3.10](https://www.python.org/downloads/), [Anaconda](https://www.anaconda.com/download), and [Node.js](https://nodejs.org/en/download/). Install these onto your system if they are not available.
 
 ### 2. Set up environment and install dependencies
-If you are setting up NoCheat for the first time, download this repository and open a terminal in its root directory on your system. Enter the command `conda env create --file=enviornment.yml`. It may take a few minutes to set up and resolve the environment on a new system.
+If you are setting up NoCheat for the first time, download this repository and open a terminal in its root directory on your system. Enter the command `conda env create --file=environment.yml`. It may take a few minutes to set up and resolve the environment on a new system.
 
 If you already have a NoCheat environment set up, and are pulling a newer or separate branch from the NoCheat repository, use the `conda env update` command to update the backend dependencies.
 

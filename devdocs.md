@@ -43,7 +43,7 @@ Finally, run the command `npm --prefix src/front install` to install the depende
 Run the command `npm --prefix src/front run build` to build the website.
 
 ### 4. Running the server
-Run the command `python src/back/main.py` to start the NoCheat server. The default port it serves its content from is 80, so for development purposes it may be more suitable to append `-p <port-number>` to the command (e.g. `-p 8080` to run from port `localhost:8080`).
+Run the command `python src/back/main.py` to start the NoCheat server. Then visit `localhost:8080` via a browser to view the website. The default port it serves its content from is currently 8080 for development purposes. To test a different port, append `-p <port-number>` to the command (e.g. `-p 80` to run from port `localhost:80`).
 
 ## How to test the software
 For running tests, complete at least steps 1 and 2 for building the software.

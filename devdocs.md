@@ -20,7 +20,9 @@ All source code used to implement, lay out, and develop NoCheat is available at 
     - `test/` - Test files
       - `data/` - Files used in unit tests
       - `test_controller.py` - PyTest file for `Controller.py`
-  - `devdocs.md` = *you are here*
+  - `bugReportTemplate.md` - Template for reporting bugs
+  - `devdocs.md` - *you are here*
+  - `userDocs.md` - User documentation
   - `environment.yml` - Conda environment file for backend dependencies
   - `README.md` - Project synopsis
 
@@ -29,6 +31,8 @@ All source code used to implement, lay out, and develop NoCheat is available at 
 
 ### 1. Install language tools
 The developer dependencies needed to build and start a NoCheat web server are [Python 3.10](https://www.python.org/downloads/), [Anaconda](https://www.anaconda.com/download), and [Node.js](https://nodejs.org/en/download/). Install these onto your system if they are not available.
+
+[Here](https://gist.github.com/kauffmanes/5e74916617f9993bc3479f401dfec7da) is a helpful guide to installing Anaconda on WSL. [Here](https://learn.microsoft.com/en-us/windows/dev-environment/javascript/nodejs-on-wsl) is a helpful guide to installing Node.js on WSL.
 
 ### 2. Set up environment and install dependencies
 If you are setting up NoCheat for the first time, download this repository and open a terminal in its root directory on your system. Enter the command `conda env create --file=environment.yml`. It may take a few minutes to set up and resolve the environment on a new system.

@@ -184,7 +184,7 @@ if __name__ == '__main__':
         help = 'Sets the static directory from which to serve frontend content')
     parser.add_argument('-p', '--port',
         action = 'store',
-        default = 80,
+        default = 8080,
         dest = 'port',
         help = 'Sets the port on which this server listens to',
         type = int)

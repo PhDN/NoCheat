@@ -32,11 +32,17 @@ I want to expand on the preprocessing so that more details are extracted, and I 
 ### Phuong Duy Nguyen
 
 #### Previous Goals
-
+    - Continue to work on integrating the display output metrics of the model on input text document through the controller and front-end UI.
+    - Fix the model's testing process and add CLI to test the model from command line.
 #### Progress
-
+    - Fixed test_model's linking issues. Added CLI arguments to streamline testing of sample files.
+    - Fixed open issues on incorrect default network port issues that lead to failed build process faced by reviewers.
+    - Added to developer documentations, particularly added helpful installation guides for Anaconda and Node.js on WSL.
+    - Working on displaying output metrics of the model.
 #### New Goals
-
+    - Finish integration to display output metrics on the front end
+    - Help finish FAQ and usage guide on front end
+    - Wrap up the project for final release.
 
 ### Simon Struthers
 

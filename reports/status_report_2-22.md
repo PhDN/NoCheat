@@ -39,9 +39,11 @@ I want to expand on the preprocessing so that more details are extracted, and I 
     - Integrate open-sourced implementation of chosen model via Hugging Face API or self-implement.
 
 #### Progress
-
+    - No current opensource implementation of DetectGPT and GLTR model, and pretrained models are not accessible via API either. Not feasible to re-implement from papers given time constraint.
+    - Worked on this week's assignment to add to developer's documentations. 
 #### New Goals
-
+    - Continue to work on integrating the display output metrics of the model on input text document through the controller and front-end UI.
+    - Fix the model's testing process and add CLI to test the model from command line.
 
 ### Simon Struthers
 

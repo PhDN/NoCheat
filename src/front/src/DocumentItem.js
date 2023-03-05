@@ -18,7 +18,7 @@ export default function DocumentItem({ name, document, openEditModal, remove, up
         <DocumentPreview document={document} />
         <div title={name}>{name}</div>
         <span className="edit" title="Edit" onClick={() => {
-            if (isPlainText(document.type.startsWith('text/'))) {
+            if (isPlainText(document)) {
                 openEditModal();
             } else {
                 let newName = window.prompt(`Change name of ${name}:`, name);

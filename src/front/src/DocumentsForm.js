@@ -51,7 +51,7 @@ export default function DocumentsForm({ openEditModal }) {
                 update={update.bind(null, id, document)} />)}
         <label htmlFor={`file-${id}`}>Insert files to submit here</label>
         <input
-            accept=".pdf,application/pdf,application/x-pdf,.txt,text/plain"
+            accept=".pdf,application/pdf,application/x-pdf,.txt,text/plain,.docx,application/vnd.openxmlformats-officedocument.wordprocessingml.document,.doc,application/msword,.odt,application/vnd.oasis.opendocument.text"
             id={`file-${id}`}
             disabled={loading}
             multiple

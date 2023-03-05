@@ -8,7 +8,6 @@ import tempfile
 DOC_FILETYPES = {"application/vnd.openxmlformats-officedocument.wordprocessingml.document"} #,
                  #"application/msword", "application/vnd.oasis.opendocument.text"}
 
-
 def parse_file(file: FileStorage) -> str:
     """
     Takes a text file and moves text into data structure.
@@ -17,8 +16,7 @@ def parse_file(file: FileStorage) -> str:
     :return: A string containing the text from the document
     """
     text = ""
-    filetype = magic.from_buffer(file.stream.read(2048), mime = True)
-    file.stream.seek(0)
+    filetype = file.mimetype
     if filetype == "text/plain":
         text = file.stream.read().decode('utf-8')
     elif filetype == "application/pdf":

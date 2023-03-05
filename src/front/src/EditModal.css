@@ -82,3 +82,16 @@
 .EditModal > textarea.word-wrap {
     white-space: pre-wrap;
 }
+
+.EditModal > .settings > label:not(:first-child) {
+    margin-left: 32px;
+}
+.EditModal > .settings > input[type="number"] {
+    all: unset;
+
+    background-color: #fff3;
+    border-radius: 8px;
+    padding: 0 8px;
+    width: 3ch;
+    margin-left: 0.5ch;
+}

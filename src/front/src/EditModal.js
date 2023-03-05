@@ -16,6 +16,7 @@ export default function EditModal({ close, id }) {
     const [titleWidth, setTitleWidth] = useState(0);
     const [confirm, setConfirm] = useState(false);
     const [wordWrap, setWordWrap] = useState(Number(localStorage.getItem('prefers-word-wrap')));
+    const [tabSize, setTabSize] = useState(Number(localStorage.getItem('preferred-tab-size') ?? 4));
 
     const span = useRef(/** @type {HTMLSpanElement} */ (null));
     useEffect(() => {
@@ -39,6 +40,12 @@ export default function EditModal({ close, id }) {
     }, [ docs, get, id, text ]);
 
     const titleInput = useRef(/** @type {HTMLInputElement} */ (null));
+
+    const setTabSizeValue = (value) => {
+        value = Math.max(2, Math.min(Number(value), 8));
+        localStorage.setItem('preferred-tab-size', value);
+        setTabSize(value);
+    };
 
     return <div className='EditModal'>
         <button className="exit" title="Exit" onClick={() => {
@@ -65,16 +72,37 @@ export default function EditModal({ close, id }) {
             {confirm && '*'}
             <span ref={span}>{title}</span>
         </div>
-        <textarea className={wordWrap ? 'word-wrap' : ''} onInput={event => {
-            setText(event.target.value);
-            setConfirm(true);
-        }} disabled={text === null} value={text ?? ''} />
+        <textarea
+            className={wordWrap ? 'word-wrap' : ''}
+            disabled={text === null}
+            style={{ tabSize, MozTabSize: tabSize }}
+            value={text ?? ''}
+            onInput={event => {
+                setText(event.target.value);
+                setConfirm(true);
+            }} />
         <div className="settings">
+            <label htmlFor="word-wrap">Word wrap</label>
             <input type="checkbox" defaultChecked={!!wordWrap} id="word-wrap" onInput={() => {
                 localStorage.setItem('prefers-word-wrap', Number(!wordWrap));
                 setWordWrap(!wordWrap);
             }} />
-            <label htmlFor="word-wrap">Word wrap</label>
+
+            <label htmlFor="tab-size">Tab size</label>
+            <input type="number" min={2} max={8} value={tabSize} id="tab-size" onInput={(event) => {
+                setTabSizeValue(event.target.value);
+            }} onKeyDown={(event) => {
+                if (event.key === 'ArrowUp' || event.key === 'ArrowDown' || event.key === 'Tab') return;
+                event.preventDefault();
+
+                if (event.key === 'ArrowLeft') {
+                    setTabSizeValue(+event.target.value - 1);
+                } else if (event.key === 'ArrowRight') {
+                    setTabSizeValue(+event.target.value + 1);
+                } else if (/^[0-9]$/.test(event.key)) {
+                    setTabSizeValue(event.key);
+                }
+            }} />
         </div>
     </div>;
 }

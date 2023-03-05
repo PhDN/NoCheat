@@ -28,14 +28,6 @@
     margin-top: 5px;
 }
 
-.DocumentItem .react-pdf__Document {
-    display: flex;
-    justify-content: center;
-
-    flex-grow: 1;
-    margin-top: 8px;
-}
-
 .DocumentsForm.filled > .DocumentItem {
     display: flex;
     flex-direction: column;

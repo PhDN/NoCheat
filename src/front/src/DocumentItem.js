@@ -1,13 +1,8 @@
-import {Document, Page, pdfjs} from 'react-pdf';
+import DocumentPreview, {isPlainText} from './DocumentPreview';
 
 import './DocumentItem.css';
 import del from './delete.svg';
 import edit from './edit.svg';
-
-pdfjs.GlobalWorkerOptions.workerSrc= `//unpkg.com/pdfjs-dist@${pdfjs.version}/build/pdf.worker.min.js`;
-
-/** @type {(document: Blob) => boolean} */
-const isPdf = document => ['application/pdf', 'application/x-pdf'].includes(document.type);
 
 /**
  * @param {{
@@ -20,17 +15,15 @@ const isPdf = document => ['application/pdf', 'application/x-pdf'].includes(docu
  */
 export default function DocumentItem({ name, document, openEditModal, remove, update }) {
     return <div className="DocumentItem">
-        {isPdf(document) &&
-            <Document file={document} onLoadError={console.error.bind(console)}>
-                <Page pageNumber={1} width={224} renderAnnotationLayer={false} renderTextLayer={false} renderInteractiveForms={false} />
-            </Document>}
+        <DocumentPreview document={document} />
         <div title={name}>{name}</div>
         <span className="edit" title="Edit" onClick={() => {
-            if (isPdf(document)) {
+            if (isPlainText(document.type.startsWith('text/'))) {
+                openEditModal();
+            } else {
                 let newName = window.prompt(`Change name of ${name}:`, name);
                 newName && update(newName);
-            } else
-                openEditModal();
+            }
         }}>
             <img src={edit} alt="Edit" width={14} />
         </span>

@@ -8,7 +8,8 @@ pdfjs.GlobalWorkerOptions.workerSrc = `//unpkg.com/pdfjs-dist@${pdfjs.version}/b
 const isPdf = document => ['application/pdf', 'application/x-pdf'].includes(document.type);
 
 /** @type {(document: Blob) => boolean} */
-export const isPlainText = document => document.type.startsWith('text/')  || document.type === 'application/json';
+export const isPlainText = document => document.type.startsWith('text/')  ||
+    ['application/json', 'application/javascript', 'application/x-javascript'].includes(document.type);
 
 /**
  * @param {{ document: Blob; }} props

@@ -18,6 +18,8 @@ export default function EditModal({ close, id }) {
     const [wordWrap, setWordWrap] = useState(Number(localStorage.getItem('prefers-word-wrap')));
     const [tabSize, setTabSize] = useState(Number(localStorage.getItem('preferred-tab-size') ?? 4));
 
+    const minTabSize = 2, maxTabSize = 8;
+
     const span = useRef(/** @type {HTMLSpanElement} */ (null));
     useEffect(() => {
         if (!docs || text !== null) return;
@@ -42,7 +44,7 @@ export default function EditModal({ close, id }) {
     const titleInput = useRef(/** @type {HTMLInputElement} */ (null));
 
     const setTabSizeValue = (value) => {
-        value = Math.max(2, Math.min(Number(value), 8));
+        value = Math.max(minTabSize, Math.min(Number(value), maxTabSize));
         localStorage.setItem('preferred-tab-size', value);
         setTabSize(value);
     };
@@ -89,7 +91,7 @@ export default function EditModal({ close, id }) {
             }} />
 
             <label htmlFor="tab-size">Tab size</label>
-            <input type="number" min={2} max={8} value={tabSize} id="tab-size" onInput={(event) => {
+            <input type="number" min={minTabSize} max={maxTabSize} value={tabSize} id="tab-size" onInput={(event) => {
                 setTabSizeValue(event.target.value);
             }} onKeyDown={(event) => {
                 if (event.key === 'ArrowUp' || event.key === 'ArrowDown' || event.key === 'Tab') return;

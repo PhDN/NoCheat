@@ -1,6 +1,7 @@
 import { useContext, useState } from "react";
 import DocumentItem from "./DocumentItem";
 import DocumentStore from "./DocumentStore";
+import { isPlainText } from "./DocumentPreview";
 import JobStore from "./JobStore";
 
 import './DocumentsForm.css';
@@ -23,8 +24,11 @@ export default function DocumentsForm({ openEditModal }) {
             event.preventDefault();
 
             const formData = new FormData();
-            for (const { document, name } of docs)
-                formData.append('files', document, name);
+            for (const { document, name } of docs) {
+                formData.append('files', new Blob([document], {
+                    type: isPlainText(document) ? 'text/plain' : document.type
+                }), name);
+            }
 
             setLoading(true);
             try {

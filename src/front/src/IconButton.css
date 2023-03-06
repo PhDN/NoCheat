@@ -1,0 +1,18 @@
+.IconButton {
+    border: none;
+
+    border-radius: 100%;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    background: var(--color);
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.IconButton:hover {
+    background: var(--hover-color);
+}

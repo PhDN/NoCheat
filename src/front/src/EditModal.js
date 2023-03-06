@@ -1,9 +1,8 @@
 import { useContext, useEffect, useRef, useState } from 'react';
 import DocumentStore from './DocumentStore';
+import IconButton from './IconButton';
 
 import './EditModal.css';
-import del from './delete.svg';
-import save from './save.svg';
 
 /**
  * @param {{ id: number; close(): void; }} props
@@ -50,11 +49,11 @@ export default function EditModal({ close, id }) {
     };
 
     return <div className='EditModal'>
-        <button className="exit" title="Exit" onClick={() => {
+        <IconButton type="delete" title="Exit" width={40} onClick={() => {
             if (!confirm || window.confirm('Are you sure you want to leave without saving your changes?'))
                 close();
-        }}><img src={del} alt="Exit" height={24} /></button>
-        {confirm && <button className="save" title="Save" onClick={async () => {
+        }} />
+        {confirm && <IconButton type="save" title="Save" width={40} onClick={async () => {
             if (!title.length) {
                 titleInput.current.focus();
                 return;
@@ -62,7 +61,7 @@ export default function EditModal({ close, id }) {
 
             await (id < 0 ? add(text, title) : update(id < 0 ? void 0 : id, new Blob([text], { type: mimeType }), title));
             close();
-        }}><img src={save} alt="Save" height={24} /></button>}
+        }} />}
         <div>
             Editing <input type="text" value={title ?? ''} disabled={text === null} onInput={event => {
                 const span = event.target.nextElementSibling;

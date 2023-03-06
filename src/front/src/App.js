@@ -1,7 +1,8 @@
 import { useState } from 'react';
-import DocumentStore from './DocumentStore';
 import DocumentsForm from './DocumentsForm';
+import DocumentStore from './DocumentStore';
 import EditModal from './EditModal';
+import IconButton from './IconButton';
 import JobStore from './JobStore';
 
 import useDocumentStore from './utils/documentStore';
@@ -21,7 +22,11 @@ export default function App() {
     return <DocumentStore.Provider value={useDocumentStore()}>
         <JobStore.Provider value={useJobsStore()}>
             <div className="App">
-                <nav>NoCheat</nav>
+                <nav>
+                    <span>NoCheat</span>
+                    <IconButton type="info" title="Information" width={40} />
+                    <IconButton type="help" title="FAQ" width={40} />
+                </nav>
                 <main>
                     <DocumentsForm openEditModal={openEditModal} />
                     <JobsList />

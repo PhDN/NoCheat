@@ -14,25 +14,13 @@
 }
 
 .EditModal > button {
-    all: unset;
-    
     position: absolute;
     top: 16px;
-
-    width: 40px;
-    height: 40px;
-
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    border-radius: 20px;
 }
-.EditModal > button.exit {
-    background-color: #f00;
+.EditModal > button.delete {
     right: 16px;
 }
 .EditModal > button.save {
-    background-color: #44f;
     right: 64px;
 }
 

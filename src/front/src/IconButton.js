@@ -16,6 +16,7 @@ const types = {
 
 /**
  * @param {{
+ *  disabled: boolean;
  *  onClick: import('react').MouseEventHandler;
  *  style: import('react').CSSProperties;
  *  title: string;
@@ -23,11 +24,11 @@ const types = {
  *  width: number;
  * }} props
  */
-export default function IconButton({ onClick, style, title, type, width }) {
+export default function IconButton({ disabled, onClick, style, title, type, width }) {
     const [src, color, hoverColor] = types[type];
     const imgWidth = Math.round(width * 0.625);
 
-    return <button className={`IconButton ${type}`} title={title} onClick={event => {
+    return <button className={`IconButton ${type}`} disabled={disabled} title={title} onClick={event => {
         for (let elem = event.target; (elem = elem.parentElement);) {
             if (elem.nodeName === 'FORM') {
                 event.preventDefault();

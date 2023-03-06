@@ -17,14 +17,19 @@ const plainTextSet = new Set([
     'rtf',
     'sh',
     'tex',
+    'xml',
     'yaml',
+]), notPlainTextSet = new Set([
+    'audiosoft-intra'
 ]);
 
 /** @type {(document: Blob) => boolean} */
-export const isPlainText = document => document.type.startsWith('text/') ||
-    /\+(?:xml|json)$/.test(document.type) ||
-    (document.type.startsWith('application/') &&
-        plainTextSet.has(document.type.match(/^application\/(?:x-)?(.+?)$/)[1]));
+export const isPlainText = ({type}) =>
+    /\+(?:xml|json)$/.test(type) ||
+    (type.startsWith('text/') &&
+        !notPlainTextSet.has(type.match(/^text\/(?:x-)?(.+?)$/)[1])) ||
+    (type.startsWith('application/') &&
+        plainTextSet.has(type.match(/^application\/(?:x-)?(.+?)$/)[1]));
 
 /**
  * @param {{ document: Blob; }} props

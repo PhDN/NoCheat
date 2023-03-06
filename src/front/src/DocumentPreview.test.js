@@ -15,18 +15,6 @@ globalThis.Blob = Blob;
 import { TextEncoder, TextDecoder } from 'web-encoding';
 globalThis.TextDecoder = TextDecoder;
 globalThis.TextEncoder = TextEncoder;
-/*FileReader.prototype.readAsArrayBuffer = function(blob) {
-    this.dispatchEvent(new ProgressEvent('loadstart'));
-    blob.arrayBuffer().then(buffer => {
-        Object.defineProperty(this, 'result', {
-            configurable: true,
-            get() { return buffer; }
-        });
-        console.log(this.result);
-        this.dispatchEvent(new ProgressEvent('loadend'));
-        this.dispatchEvent(new ProgressEvent('load'));
-    });
-};*/
 
 const sleep = async msecs => new Promise(resolve => setTimeout(resolve, msecs));
 
@@ -61,6 +49,13 @@ describe('Test isPlainText', () => {
     test.each`
         type
         ${'text/plain'}
+        ${'text/javascript'}
+        ${'text/x-c'}
+        ${'text/x-fortran'}
+        ${'text/x-java-source'}
+        ${'text/x-h'}
+        ${'application/javascript'}
+        ${'application/x-javascript'}
         ${'application/json'}
         ${'application/x-sh'}
         ${'application/x-csh'}
@@ -74,13 +69,19 @@ describe('Test isPlainText', () => {
     test.each`
         type
         ${''}
-        ${'application/x-msdos-program'}
-        ${'inode/directory'}
-        ${'image/png'}
+        ${'application/book'}
         ${'application/pdf'}
+        ${'application/postscript'}
+        ${'application/x-bzip2'}
+        ${'application/x-msdos-program'}
         ${'application/x-pdf'}
+        ${'audio/aiff'}
+        ${'audio/midi'}
         ${'audio/ogg'}
+        ${'image/png'}
+        ${'inode/directory'}
         ${'video/mpeg'}
+        ${'text/x-audiosoft-intra'}
     `('Document of type "$type" is not plain text', ({type}) => {
         const blob = new Blob([], { type });
         expect(isPlainText(blob)).toBe(false);

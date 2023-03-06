@@ -5,7 +5,7 @@ import "./DocumentPreview.css";
 pdfjs.GlobalWorkerOptions.workerSrc = `//unpkg.com/pdfjs-dist@${pdfjs.version}/build/pdf.worker.min.js`;
 
 /** @type {(document: Blob) => boolean} */
-const isPdf = document => ['application/pdf', 'application/x-pdf'].includes(document.type);
+export const isPdf = document => ['application/pdf', 'application/x-pdf'].includes(document.type);
 
 const plainTextSet = new Set([
     'bsh',
@@ -30,10 +30,10 @@ export const isPlainText = document => document.type.startsWith('text/') ||
  * @param {{ document: Blob; }} props
  */
 export default function DocumentPreview({ document }) {
-    const [text, setText] = useState(isPlainText(document) ? false : (document.type || 'unknown'));
+    const [text, setText] = useState(isPlainText(document) ? null : (document.type || 'unknown'));
 
     useEffect(() => {
-        if (!text && isPlainText(document)) document.text().then(text => setText(text.slice(0, 2000)));
+        if (text === null && isPlainText(document)) document.text().then(text => setText(text.slice(0, 2000)));
     }, [document, text]);
 
     return isPdf(document) ? <Document file={document} onLoadError={console.error.bind(console)}>

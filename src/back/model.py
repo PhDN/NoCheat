@@ -9,9 +9,8 @@ from transformers import GPT2LMHeadModel, GPT2TokenizerFast
 from collections import OrderedDict
 
 class GPT2PPL:
-    def __init__(self, device='cpu'):
-        # self.device = 'cuda' if device=='cuda' and torch.version.cuda is not None else 'cpu'
-        self.device = device
+    def __init__(self, device='cuda'):
+        self.device = 'cuda' if device=='cuda' and torch.version.cuda is not None else 'cpu'
         self.model_id = 'gpt2'
         self.model = GPT2LMHeadModel.from_pretrained(self.model_id).to(self.device)
         self.tokenizer = GPT2TokenizerFast.from_pretrained(self.model_id)

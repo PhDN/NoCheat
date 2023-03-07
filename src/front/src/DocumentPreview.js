@@ -32,6 +32,10 @@ export const isPlainText = ({type}) =>
         plainTextSet.has(type.match(/^application\/(?:x-)?(.+?)$/)[1]));
 
 /**
+ * Component for previewing a given document.
+ * 
+ * If the document is a PDF or a text file, a preview will be displayed. Otherwise, the MIME type of the file is shown.
+ * 
  * @param {{ document: Blob; }} props
  */
 export default function DocumentPreview({ document }) {
@@ -42,7 +46,12 @@ export default function DocumentPreview({ document }) {
     }, [document, text]);
 
     return isPdf(document) ? <Document file={document} onLoadError={console.error.bind(console)}>
-        <Page pageNumber={1} width={224} renderAnnotationLayer={false} renderTextLayer={false} renderInteractiveForms={false} />
+        <Page
+            pageNumber={1}
+            width={224}
+            renderAnnotationLayer={false}
+            renderInteractiveForms={false}
+            renderTextLayer={false} />
     </Document> : <div className={`DocumentPreview${isPlainText(document) ? '' : ' center'}`}>
         {text}
     </div>;

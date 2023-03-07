@@ -4,6 +4,9 @@ import JobStore from './JobStore';
 
 import './JobsList.css';
 
+/**
+ * Component listing the user's stored job submissions.
+ */
 export default function JobsList() {
     const [ jobs, { remove, update } ] = useContext(JobStore);
 

@@ -86,7 +86,19 @@ const promisifyIdbRequest = req => new Promise((resolve, reject) => {
 });
 
 /**
- * @param {string} [storeName] Name of the document store to use
+ * Hook for connecting to a document store.
+ * 
+ * The following functions are provided for manipulating the document store:
+ * - `add` - Insert any number of documents into the store. Parameters must be one of the following patterns:
+ *   - `File`, ...
+ *   - `string`, `Blob`, ...
+ *   - (empty)
+ * - `clear` - Remove all documents from the store.
+ * - `get` - Get details for a given document ID.
+ * - `remove` - Remove a given document from the store using its ID.
+ * - `update` - Update the contents & name of a given document in the store using its ID.
+ * 
+ * @param {string} [storeName] Name of the document store to open.
  * @returns {[DocumentStoreItem[] | null, DocumentStoreApi]}
  */
 export default function useDocumentStore(storeName = 'documents') {

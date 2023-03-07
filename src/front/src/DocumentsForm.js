@@ -9,6 +9,20 @@ import del from './delete.svg';
 import _new from './new.svg';
 import send from './send.svg';
 
+const acceptedFormats = [
+    ".pdf",
+        "application/pdf",
+        "application/x-pdf",
+    ".txt",
+        "text/plain",
+    ".docx",
+        "application/vnd.openxmlformats-officedocument.wordprocessingml.document",
+    ".doc",
+        "application/msword",
+    ".odt",
+        "application/vnd.oasis.opendocument.text"
+];
+
 /**
  * @param {{ openEditModal(id: number): Promise<void>; }} props
  */
@@ -55,7 +69,7 @@ export default function DocumentsForm({ openEditModal }) {
                 update={update.bind(null, id, document)} />)}
         <label htmlFor={`file-${id}`}>Upload file(s)</label>
         <input
-            accept=".pdf,application/pdf,application/x-pdf,.txt,text/plain"
+            accept={acceptedFormats.join(',')}
             id={`file-${id}`}
             disabled={loading}
             multiple

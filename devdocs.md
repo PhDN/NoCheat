@@ -27,7 +27,7 @@ All source code used to implement, lay out, and develop NoCheat is available at 
   - `README.md` - Project synopsis
 
 ## How to build the software
-**NOTICE:** If you want to build or run the sever on Windows, you must do so using the [Windows Subsystem for Linux](https://learn.microsoft.com/en-us/windows/wsl/install). Follow the link for instructions as to how to set up a WSL instance, use a terminal into your WSL insance, and then follow the instructions below.
+**NOTICE:** If you want to build or run the sever on Windows, it is highly recommended to use the [Windows Subsystem for Linux](https://learn.microsoft.com/en-us/windows/wsl/install). Follow the link for instructions as to how to set up a WSL instance, use a terminal into your WSL instance, and then proceed using the Linux instructions below.
 
 ### 1. Install language tools
 The developer dependencies needed to build and start a NoCheat web server are [Python 3.10](https://www.python.org/downloads/), [Anaconda](https://www.anaconda.com/download), and [Node.js](https://nodejs.org/en/download/). Install these onto your system if they are not available.
@@ -40,6 +40,23 @@ If you are setting up NoCheat for the first time, download this repository and o
 If you already have a NoCheat environment set up, and are pulling a newer or separate branch from the NoCheat repository, use the `conda env update` command to update the backend dependencies.
 
 Run the command `conda activate nocheat` to activate the newly set-up Python environment.
+
+Then, install the command line utilities Antiword and ODT2TXT.
+#### Antiword
+##### Linux (Including WSL)
+Installing Antiword on Linux is done by running the command `sudo apt-get install antiword`.
+##### Mac
+To install Antiword on Mac, install MacPorts and run `sudo port install antiword` in the macOS terminal ([detailed instructions here](https://ports.macports.org/port/antiword/)).
+##### Windows
+To install Antiword on Windows, first download the .zip [here](https://www.softpedia.com/get/Office-tools/Other-Office-Tools/Antiword.shtml).
+Then extract the antiword folder to `C:\` and add it to the `PATH` environment variable ([instructions for adding to PATH](https://www.architectryan.com/2018/03/17/add-to-the-path-on-windows-10/)).
+#### ODT2TXT
+##### Linux (Including WSL)
+Installing ODT2TXT on Linux is done by running the command `sudo apt install odt2txt`.
+##### Mac
+To install ODT2TXT on Mac, install MacPorts and run `sudo port install odt2txt` in the macOS terminal ([detailed instructions here](https://ports.macports.org/port/odt2txt/)).
+##### Windows
+To install ODT2TXT on Windows, follow the instructions [here](https://github.com/dstosberg/odt2txt/blob/master/INSTALL).
 
 Finally, run the command `npm --prefix src/front install` to install the dependencies for building the web page viewed in the frontend.
 

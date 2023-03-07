@@ -17,8 +17,9 @@ Finish release features and address peer review criticism.
 I want to expand on the preprocessing so that more details are extracted, and I want to expand the result analysis fed back to the website.
 
 #### Progress
-
+I ended up focusing on other goals which took priority. Specifically, I focused on setting up the backend so that it imported DOC and ODT files.
 #### New Goals
+I need to update the documentation based on the recommendations from the Peer Reviews, as well as improving backend testing and polishing what we currently have for the final release.
 
 ### Alex Hugli
 

@@ -12,5 +12,4 @@ dependencies:
   - cudatoolkit
   - pypdf2
   - python-docx
-  - python-magic
 prefix: C:\Users\dmfro\anaconda3\envs\nocheat

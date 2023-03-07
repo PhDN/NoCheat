@@ -20,7 +20,35 @@
     align-items: center;
 }
 
-.App > nav,
+.App > nav {
+    background-color: #ffffff30;
+
+    width: calc(100% - 2rem);
+    height: 3em;
+
+    padding: 0 1rem;
+}
+
+
+h1 {
+    width: fit-content;
+    color: #000000;
+    background: #3cff3c;
+    border: 2px solid #000000;
+    padding: 0 8px;
+}
+
+h2 {
+    font-size: 30px;
+}
+
+p {
+    text-align: center;
+    padding-bottom: 10px;
+    padding-left: 140px;
+    padding-right: 140px;
+}
+
 .App > footer {
     background-color: #ffffff30;
 
@@ -30,6 +58,15 @@
     padding: 0 1rem;
 
     font-size: 0.8em;
+}
+
+.App > nav > span {
+    text-align: left;
+    flex-grow: 1;
+}
+
+.App > nav > button {
+    margin-left: 6px;
 }
 
 .App > main {

@@ -1,12 +1,9 @@
 from werkzeug.datastructures import FileStorage
+from subprocess import Popen, PIPE
 from PyPDF2 import PdfFileReader
-from model import GPT2PPL
-import magic
+from src.back.model import GPT2PPL
 import docx
 import tempfile
-
-DOC_FILETYPES = {"application/vnd.openxmlformats-officedocument.wordprocessingml.document"} #,
-                 #"application/msword", "application/vnd.oasis.opendocument.text"}
 
 
 def parse_file(file: FileStorage) -> str:
@@ -17,8 +14,7 @@ def parse_file(file: FileStorage) -> str:
     :return: A string containing the text from the document
     """
     text = ""
-    filetype = magic.from_buffer(file.stream.read(2048), mime = True)
-    file.stream.seek(0)
+    filetype = file.mimetype
     if filetype == "text/plain":
         text = file.stream.read().decode('utf-8')
     elif filetype == "application/pdf":
@@ -26,12 +22,28 @@ def parse_file(file: FileStorage) -> str:
         for page in reader.pages:
             text = text + page.extractText()
         text = text.strip()
-    elif filetype in DOC_FILETYPES:
+    elif filetype == "application/vnd.openxmlformats-officedocument.wordprocessingml.document":
         tmp = tempfile.NamedTemporaryFile()
         tmp.write(file.stream.read())
         doc = docx.Document(tmp.name)
         for p in doc.paragraphs:
             text = text + p.text
+    elif filetype == "application/msword":
+        tmp = tempfile.NamedTemporaryFile()
+        tmp.write(file.stream.read())
+        cmd = ['antiword', tmp.name]
+        p = Popen(cmd, stdout=PIPE)
+        stdout, stderr = p.communicate()
+        text = stdout.decode('ascii', 'ignore')
+        text = text.strip()
+    elif filetype == "application/vnd.oasis.opendocument.text":
+        tmp = tempfile.NamedTemporaryFile()
+        tmp.write(file.stream.read())
+        cmd = ['odt2txt', tmp.name]
+        p = Popen(cmd, stdout=PIPE)
+        stdout, stderr = p.communicate()
+        text = stdout.decode('ascii', 'ignore')
+        text = text.strip()
     else:
         raise IOError(f"Invalid file type {filetype}. File must be plaintext, DOCX, or a PDF.")
 

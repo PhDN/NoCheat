@@ -1,4 +1,5 @@
 import { useEffect } from 'react';
+import IconButton from './IconButton';
 
 import './JobItem.css';
 
@@ -33,13 +34,15 @@ export default function JobItem({ documents, id, remove, status, update }) {
     return <div className={`JobItem ${status}`}>
         <div className="banner">
             Job {id}
-            {status === 'waiting' ?
-                <button onClick={() => {
+            <IconButton
+                type="delete"
+                title={status === 'waiting' ? 'Cancel' : 'Delete'}
+                width={32}
+                onClick={status === 'waiting' ? () => {
                     removed = true;
                     fetch(`/api/job/${id}`, { method: 'DELETE' });
                     remove();
-                }}>Cancel</button> :
-                <button onClick={remove}>Delete</button>}
+                } : remove} />
         </div>
         <ul>{documents.map(({ name, status }, index) =>
             <li key={index}><em>{name}</em>{status && `: ${status}`}</li>

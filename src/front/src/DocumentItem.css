@@ -1,39 +1,36 @@
+.DocumentItem {
+    animation-name: pop-in;
+    animation-duration: 0.25s;
+    animation-iteration-count: 1;
+    animation-timing-function: ease-in-out;
+}
+
+@keyframes pop-in {
+    0% { transform: scale(0); }
+    100% { transform: scale(1); }
+}
+
+@keyframes pop-out {
+    0% { transform: scale(1); }
+    100% { transform: scale(0); }
+}
+
 .DocumentItem > div {
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
 }
 
-.DocumentItem > span {
+.DocumentItem > button {
     position: absolute;
     top: 16px;
-
-    display: block;
-    width: 24px;
-    height: 24px;
-    border-radius: 12px;
     box-shadow: 2px 2px 4px -1px #0008;
 }
-.DocumentItem > span.edit {
-    background-color: #4b4;
+.DocumentItem > button.edit {
     right: 48px;
 }
-.DocumentItem > span.del {
-    background-color: #f00;
+.DocumentItem > button.delete {
     right: 16px;
-}
-.DocumentItem > span > img {
-    display: block;
-    margin: auto;
-    margin-top: 5px;
-}
-
-.DocumentItem .react-pdf__Document {
-    display: flex;
-    justify-content: center;
-
-    flex-grow: 1;
-    margin-top: 8px;
 }
 
 .DocumentsForm.filled > .DocumentItem {

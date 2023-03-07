@@ -13,4 +13,6 @@ First, install [Anaconda](https://www.anaconda.com/download) and set up the Pyth
 
 Next, install [Node & NPM](https://docs.npmjs.com/cli/v9/configuring-npm/install) and run the command `npm --prefix src/front install` to install the frontend's dependencies. Then, you can run `npm --prefix src/front run build` to build the React app.
 
+Then, install the [Antiword](devdocs.md#antiword) and [ODT2TXT](devdocs.md#odt2txt).
+
 Finally, run the Flask server to host the website and API with the command `python src/back/main.py`. The `--help` option should list configurable settings, such as `-p` to run the server on a  port of your choosing for ease of development.

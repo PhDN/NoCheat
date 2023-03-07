@@ -17,8 +17,9 @@ Finish release features and address peer review criticism.
 I want to expand on the preprocessing so that more details are extracted, and I want to expand the result analysis fed back to the website.
 
 #### Progress
-
+I ended up focusing on other goals which took priority. Specifically, I focused on setting up the backend so that it imported DOC and ODT files.
 #### New Goals
+I need to update the documentation based on the recommendations from the Peer Reviews, as well as improving backend testing and polishing what we currently have for the final release.
 
 ### Alex Hugli
 
@@ -32,11 +33,17 @@ I want to expand on the preprocessing so that more details are extracted, and I 
 ### Phuong Duy Nguyen
 
 #### Previous Goals
-
+    - Continue to work on integrating the display output metrics of the model on input text document through the controller and front-end UI.
+    - Fix the model's testing process and add CLI to test the model from command line.
 #### Progress
-
+    - Fixed test_model's linking issues. Added CLI arguments to streamline testing of sample files.
+    - Fixed open issues on incorrect default network port issues that lead to failed build process faced by reviewers.
+    - Added to developer documentations, particularly added helpful installation guides for Anaconda and Node.js on WSL.
+    - Working on displaying output metrics of the model.
 #### New Goals
-
+    - Finish integration to display output metrics on the front end
+    - Help finish FAQ and usage guide on front end
+    - Wrap up the project for final release.
 
 ### Simon Struthers
 

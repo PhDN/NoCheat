@@ -1,12 +1,27 @@
 import { useContext, useState } from "react";
 import DocumentItem from "./DocumentItem";
 import DocumentStore from "./DocumentStore";
+import { isPlainText } from "./DocumentPreview";
 import JobStore from "./JobStore";
 
 import './DocumentsForm.css';
 import del from './delete.svg';
 import _new from './new.svg';
 import send from './send.svg';
+
+const acceptedFormats = [
+    ".pdf",
+        "application/pdf",
+        "application/x-pdf",
+    ".txt",
+        "text/plain",
+    ".docx",
+        "application/vnd.openxmlformats-officedocument.wordprocessingml.document",
+    ".doc",
+        "application/msword",
+    ".odt",
+        "application/vnd.oasis.opendocument.text"
+];
 
 /**
  * @param {{ openEditModal(id: number): Promise<void>; }} props
@@ -23,8 +38,11 @@ export default function DocumentsForm({ openEditModal }) {
             event.preventDefault();
 
             const formData = new FormData();
-            for (const { document, name } of docs)
-                formData.append('files', document, name);
+            for (const { document, name } of docs) {
+                formData.append('files', new Blob([document], {
+                    type: isPlainText(document) ? 'text/plain' : document.type
+                }), name);
+            }
 
             setLoading(true);
             try {
@@ -49,9 +67,9 @@ export default function DocumentsForm({ openEditModal }) {
                 openEditModal={openEditModal.bind(null, id)}
                 remove={remove.bind(null, id)}
                 update={update.bind(null, id, document)} />)}
-        <label htmlFor={`file-${id}`}>Insert files to submit here</label>
+        <label htmlFor={`file-${id}`}>Upload file(s)</label>
         <input
-            accept=".pdf,application/pdf,application/x-pdf,.txt,text/plain"
+            accept={acceptedFormats.join(',')}
             id={`file-${id}`}
             disabled={loading}
             multiple

@@ -24,6 +24,16 @@ class TestController(TestCase):
             file = FileStorage(stream=t, filename="data/lipsum.docx", content_type="application/vnd.openxmlformats-officedocument.wordprocessingml.document")
             self.assertEquals(testText, c.parse_file(file))
 
+    def test_parse_fileDoc(self):
+        with open("data/lipsum.doc", 'rb') as t:
+            file = FileStorage(stream=t, filename="data/lipsum.doc", content_type="application/msword")
+            self.assertEquals(testText, c.parse_file(file))
+
+    def test_parse_fileOdt(self):
+        with open("data/lipsum.odt", 'rb') as t:
+            file = FileStorage(stream=t, filename="data/lipsum.odt", content_type="application/vnd.oasis.opendocument.text")
+            self.assertEquals(testText, c.parse_file(file))
+
     def test_analyze_results(self):
         assert True
 

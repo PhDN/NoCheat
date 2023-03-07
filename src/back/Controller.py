@@ -1,7 +1,7 @@
 from werkzeug.datastructures import FileStorage
 from subprocess import Popen, PIPE
 from PyPDF2 import PdfFileReader
-from model import GPT2PPL
+from src.back.model import GPT2PPL
 import docx
 import tempfile
 

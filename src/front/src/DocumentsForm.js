@@ -1,6 +1,7 @@
 import { useContext, useState } from "react";
 import DocumentItem from "./DocumentItem";
 import DocumentStore from "./DocumentStore";
+import { isPlainText } from "./DocumentPreview";
 import JobStore from "./JobStore";
 
 import './DocumentsForm.css';
@@ -23,8 +24,11 @@ export default function DocumentsForm({ openEditModal }) {
             event.preventDefault();
 
             const formData = new FormData();
-            for (const { document, name } of docs)
-                formData.append('files', document, name);
+            for (const { document, name } of docs) {
+                formData.append('files', new Blob([document], {
+                    type: isPlainText(document) ? 'text/plain' : document.type
+                }), name);
+            }
 
             setLoading(true);
             try {
@@ -49,7 +53,7 @@ export default function DocumentsForm({ openEditModal }) {
                 openEditModal={openEditModal.bind(null, id)}
                 remove={remove.bind(null, id)}
                 update={update.bind(null, id, document)} />)}
-        <label htmlFor={`file-${id}`}>Insert files to submit here</label>
+        <label htmlFor={`file-${id}`}>Upload file(s)</label>
         <input
             accept=".pdf,application/pdf,application/x-pdf,.txt,text/plain"
             id={`file-${id}`}

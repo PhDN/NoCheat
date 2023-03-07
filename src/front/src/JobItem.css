@@ -37,7 +37,7 @@
 }
 .JobItem.cancelled,
 .JobItem.error {
-    background-color: #e00;
+    background-color: #b22;
 }
 .JobItem.cancelled > .banner,
 .JobItem.error > .banner {

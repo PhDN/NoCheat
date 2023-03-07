@@ -31,6 +31,8 @@ jobs:
           $CONDA/bin/conda env update --file environment.yml --name base
           sudo apt-get install antiword
           sudo apt install odt2txt
+          # adds working directory to PATH variable so that imports files properly
+          export PYTHONPATH=$PWD
       - name: Lint with flake8
         run: |
           $CONDA/bin/conda install flake8

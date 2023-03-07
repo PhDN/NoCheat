@@ -57,6 +57,15 @@ p {
     font-size: 0.8em;
 }
 
+.App > nav > span {
+    text-align: left;
+    flex-grow: 1;
+}
+
+.App > nav > button {
+    margin-left: 6px;
+}
+
 .App > main {
     flex-grow: 1;
     flex-direction: column;

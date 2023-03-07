@@ -14,25 +14,13 @@
 }
 
 .EditModal > button {
-    all: unset;
-    
     position: absolute;
     top: 16px;
-
-    width: 40px;
-    height: 40px;
-
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    border-radius: 20px;
 }
-.EditModal > button.exit {
-    background-color: #f00;
+.EditModal > button.delete {
     right: 16px;
 }
 .EditModal > button.save {
-    background-color: #44f;
     right: 64px;
 }
 
@@ -48,8 +36,10 @@
     white-space: pre;
     visibility: hidden;
     position: absolute;
+    top: 0;
+    left: 0;
 }
-.EditModal > div > input {
+.EditModal > div > input[type="text"] {
     all: unset;
 
     background-color: #fff3;
@@ -76,4 +66,20 @@
     background-color: #111c;
 
     border-radius: 32px;
+}
+.EditModal > textarea.word-wrap {
+    white-space: pre-wrap;
+}
+
+.EditModal > .settings > label:not(:first-child) {
+    margin-left: 32px;
+}
+.EditModal > .settings > input[type="number"] {
+    all: unset;
+
+    background-color: #fff3;
+    border-radius: 8px;
+    padding: 0 8px;
+    width: 3ch;
+    margin-left: 0.5ch;
 }

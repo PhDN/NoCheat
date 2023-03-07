@@ -41,5 +41,5 @@ jobs:
       - name: Test with pytest
         working-directory: ./
         run: |
-          echo $PWD
+          export PYTHONPATH=$PWD
           $CONDA/bin/pytest

@@ -1,7 +1,6 @@
 from werkzeug.datastructures import FileStorage
 from PyPDF2 import PdfFileReader
 from src.back.model import GPT2PPL
-import magic
 import docx
 import tempfile
 

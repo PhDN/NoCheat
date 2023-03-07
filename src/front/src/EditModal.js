@@ -1,6 +1,7 @@
 import { useContext, useEffect, useRef, useState } from 'react';
 import DocumentStore from './DocumentStore';
 import IconButton from './IconButton';
+import Modal from './Modal';
 
 import './EditModal.css';
 
@@ -48,7 +49,7 @@ export default function EditModal({ close, id }) {
         setTabSize(value);
     };
 
-    return <div className='EditModal'>
+    return <Modal className='EditModal'>
         <IconButton type="delete" title="Exit" width={40} onClick={() => {
             if (!confirm || window.confirm('Are you sure you want to leave without saving your changes?'))
                 close();
@@ -105,5 +106,5 @@ export default function EditModal({ close, id }) {
                 }
             }} />
         </div>
-    </div>;
+    </Modal>;
 }

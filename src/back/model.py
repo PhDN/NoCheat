@@ -3,19 +3,19 @@ This code a slight modification of perplexity by hugging face
 https://huggingface.co/docs/transformers/perplexity
 """
 
-import torch
 import re
+import torch
 from transformers import GPT2LMHeadModel, GPT2TokenizerFast
 from collections import OrderedDict
 
-
 class GPT2PPL:
-    def __init__(self, model_id="gpt2"):
-        self.device = 'cuda' if torch.version.cuda is not None else 'cpu'
-        self.model_id = model_id
-        self.model = GPT2LMHeadModel.from_pretrained(model_id).to(self.device)
-        self.tokenizer = GPT2TokenizerFast.from_pretrained(model_id)
-
+    def __init__(self, device='cuda'):
+        self.device = 'cuda' if device=='cuda' and torch.version.cuda is not None else 'cpu'
+        self.model_id = 'gpt2'
+        self.model = GPT2LMHeadModel.from_pretrained(self.model_id).to(self.device)
+        self.tokenizer = GPT2TokenizerFast.from_pretrained(self.model_id)
+        
+        # Hyperparameters
         self.max_length = self.model.config.n_positions
         self.stride = 512
 
@@ -71,6 +71,7 @@ class GPT2PPL:
 
         output, label = self.get_results(results["Perplexity per line"])
         results["label"] = label
+        print(output)
 
         return results, output
 

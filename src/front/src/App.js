@@ -23,11 +23,13 @@ export default function App() {
         <JobStore.Provider value={useJobsStore()}>
             <div className="App">
                 <nav>
-                    <span>NoCheat</span>
+                    <span><h1>NoCheat</h1></span>
                     <IconButton type="info" title="Information" width={40} />
                     <IconButton type="help" title="FAQ" width={40} />
                 </nav>
                 <main>
+                    <h2>Our powerful model can detect AI generated texts.</h2>
+                    <p>Check credibility of a text by uploading a file below or adding text to our editor using the add button on right.</p>
                     <DocumentsForm openEditModal={openEditModal} />
                     <JobsList />
                     {editing !== null && <EditModal id={editing} close={setEditing.bind(null, null)} />}

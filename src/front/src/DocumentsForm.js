@@ -53,7 +53,7 @@ export default function DocumentsForm({ openEditModal }) {
                 openEditModal={openEditModal.bind(null, id)}
                 remove={remove.bind(null, id)}
                 update={update.bind(null, id, document)} />)}
-        <label htmlFor={`file-${id}`}>Insert files to submit here</label>
+        <label htmlFor={`file-${id}`}>Upload file(s)</label>
         <input
             accept=".pdf,application/pdf,application/x-pdf,.txt,text/plain"
             id={`file-${id}`}

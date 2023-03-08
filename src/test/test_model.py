@@ -15,7 +15,7 @@ Warning: The model takes ~1-2 minute to classify a document using cpu.
 """ 
 
 import argparse
-import sys
+import json
 import sys
 sys.path.append('src/back/')
 from model import GPT2PPL
@@ -43,3 +43,6 @@ if __name__ == "__main__":
     print("Perplixty per line: ", result["Perplexity per line"])
     print("Burstiness: ", result["Burstiness"])
     print("Model Output: ", result["Model Output"])
+    
+    result_as_json = json.dumps(result, indent=4)
+    print(result_as_json)

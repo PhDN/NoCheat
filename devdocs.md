@@ -8,7 +8,7 @@ All source code used to implement, lay out, and develop NoCheat is available at 
   - `.github/workflows/` - GitHub Actions
   - `src/` - Source code and test files
     - `back/` - Server code
-      - `Controller.py` - File decoder
+      - `Controller.py` - File decoder and interface between view and model
       - `main.py` - The server software
       - `model.py` - Language proceessing model
     - `front/` - Website code
@@ -20,6 +20,7 @@ All source code used to implement, lay out, and develop NoCheat is available at 
     - `test/` - Test files
       - `data/` - Files used in unit tests
       - `test_controller.py` - PyTest file for `Controller.py`
+      - `test_model.py` - PyTest file for `model.py`
   - `bugReportTemplate.md` - Template for reporting bugs
   - `devdocs.md` - *you are here*
   - `userDocs.md` - User documentation
@@ -70,7 +71,7 @@ Run the command `python src/back/main.py` to start the NoCheat server. Then visi
 For running tests, complete at least steps 1 and 2 for building the software.
 
 ### Backend tests
-Run `activate conda nocheat` if you have not, then run `export PYTHONPATH=$PWD` and `pytest` from the root directory to perform backend tests.
+Run `conda activate nocheat` if you have not, then run `export PYTHONPATH=$PWD` and `pytest` from the root directory to perform backend tests.
 
 ### Frontend tests
 If you have not previously run the frontend tests, run the command `npm --prefix src/front install --dev` to install the necessary frontend development dependencies.

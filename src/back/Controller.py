@@ -46,7 +46,7 @@ def parse_file(file: FileStorage) -> str:
         text = stdout.decode('ascii', 'ignore')
         text = text.strip()
     else:
-        raise IOError(f"Invalid file type {filetype}. File must be plaintext, DOCX, or a PDF.")
+        raise IOError(f"Invalid file type {filetype}. File must be plaintext, DOC, DOCX, ODT, or a PDF.")
 
     return text
 

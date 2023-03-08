@@ -89,7 +89,16 @@ const promisifyIdbRequest = req => new Promise((resolve, reject) => {
 });
 
 /**
- * @param {string} [storeName] Name of the document store to use
+ * Hook for connecting to a job store.
+ * 
+ * The following functions are provided for manipulating the job store:
+ * - `add` - Insert a new job into the store with a given ID and list of document names as parameters.
+ * - `clear` - Remove all jobs from the store.
+ * - `get` - Get details for a given job ID.
+ * - `remove` - Remove a given job from the store using its ID.
+ * - `update` - Update the status of a given job and its documents in the store using its ID.
+ * 
+ * @param {string} [storeName] Name of the job store to use
  * @returns {[JobStoreItem[] | null, JobStoreApi]}
  */
 export default function useJobsStore(storeName = 'jobs') {

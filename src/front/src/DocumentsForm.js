@@ -24,6 +24,10 @@ const acceptedFormats = [
 ];
 
 /**
+ * Component containing the form for submitting documents.
+ * 
+ * `App` provides a callback called `openEditModal` for editing files.
+ * 
  * @param {{ openEditModal(id: number): Promise<void>; }} props
  */
 export default function DocumentsForm({ openEditModal }) {

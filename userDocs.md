@@ -16,6 +16,10 @@ Once the web application opens, user can upload one or multiple text files. This
 Our model will parse through the files and return a message declaring if the text is human or AI generated.
 In some cases, model might require more information in order to make a decision. It requires at least 100 characters at a minimum.
 
+More detailed instructions can be found [here](instructions.md).
+
+Answers to commonly asked questions can be found [here](faq.md).
+
 ## How to report a bug
 To report a bug, use github Issues with the following template:
 - [Bug report template](bugReportTemplate.md)

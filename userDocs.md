@@ -9,12 +9,12 @@ Currently, there is no need to install the software to be run.
 It will be posted here if we cover more use cases and bring NoCheat to other platforms.
 
 ## How to run the software
-This is a work in progress as we still need to host a site.
+At the moment the site is not hosted. However, users can run it themselves by following the instructions from the [README](README.md#Self-Hosting_Instructions).
 
 ## How to use the software
-Once the web application opens, user can upload one or multiple text files. 
+Once the web application opens, user can upload one or multiple text files. This can be done via clicking on the submission bar and uploading files from the computer, or by clicking the grey plus button and inserting the text manually. Clicking the blue submit button will create a new job, which will finish when the files are processed.
 Our model will parse through the files and return a message declaring if the text is human or AI generated.
-In some cases, model might require more information in order to make a decision.
+In some cases, model might require more information in order to make a decision. It requires at least 100 characters at a minimum.
 
 ## How to report a bug
 To report a bug, use github Issues with the following template:

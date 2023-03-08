@@ -8,7 +8,7 @@ All source code used to implement, lay out, and develop NoCheat is available at 
   - `.github/workflows/` - GitHub Actions
   - `src/` - Source code and test files
     - `back/` - Server code
-      - `Controller.py` - File decoder
+      - `Controller.py` - File decoder and interface between view and model
       - `main.py` - The server software
       - `model.py` - Language proceessing model
     - `front/` - Website code
@@ -20,6 +20,7 @@ All source code used to implement, lay out, and develop NoCheat is available at 
     - `test/` - Test files
       - `data/` - Files used in unit tests
       - `test_controller.py` - PyTest file for `Controller.py`
+      - `test_model.py` - PyTest file for `model.py`
   - `bugReportTemplate.md` - Template for reporting bugs
   - `devdocs.md` - *you are here*
   - `userDocs.md` - User documentation

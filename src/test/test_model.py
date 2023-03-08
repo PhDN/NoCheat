@@ -16,9 +16,9 @@ Warning: The model takes ~1-2 minute to classify a document using cpu.
 
 import argparse
 import json
-import sys
-sys.path.append('src/back/')
-from model import GPT2PPL
+# import sys
+# sys.path.append('src/back/')
+from src.back.model import GPT2PPL
 
 if __name__ == "__main__":
     parser = argparse.ArgumentParser()

@@ -71,7 +71,7 @@ Run the command `python src/back/main.py` to start the NoCheat server. Then visi
 For running tests, complete at least steps 1 and 2 for building the software.
 
 ### Backend tests
-Run `activate conda nocheat` if you have not, then run `export PYTHONPATH=$PWD` and `pytest` from the root directory to perform backend tests.
+Run `conda activate nocheat` if you have not, then run `export PYTHONPATH=$PWD` and `pytest` from the root directory to perform backend tests.
 
 ### Frontend tests
 If you have not previously run the frontend tests, run the command `npm --prefix src/front install --dev` to install the necessary frontend development dependencies.

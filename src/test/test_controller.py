@@ -6,8 +6,6 @@ testText = "Lorem ipsum dolor sit amet"
 
 
 class TestController(TestCase):
-    def test_process_file(self):
-        assert True
 
     def test_parse_fileTxt(self):
         with open("src/test/data/lipsum.txt", 'rb') as t:
@@ -36,6 +34,37 @@ class TestController(TestCase):
 
     def test_analyze_results(self):
         assert True
+
+    def test_process_fileHuman(self):
+        control = c.Controller.get_instance()
+        with open("src/test/data/human_generated_text.txt", 'rb') as t:
+            file = FileStorage(stream=t, filename="data/human_generated_text.txt", content_type="text/plain")
+            self.assertEquals(1, control.process_file(file))
+        with open("src/test/data/human_generated_text.pdf", 'rb') as t:
+            file = FileStorage(stream=t, filename="data/human_generated_text.pdf", content_type="application/pdf")
+            self.assertEquals(1, control.process_file(file))
+        # with open("src/test/data/human_generated_text.docx", 'rb') as t:
+        #     file = FileStorage(stream=t, filename="data/human_generated_text.docx", content_type="application/vnd.openxmlformats-officedocument.wordprocessingml.document")
+        #     self.assertEquals(1, control.process_file(file))
+        with open("src/test/data/human_generated_text.doc", 'rb') as t:
+            file = FileStorage(stream=t, filename="data/human_generated_text.doc", content_type="application/msword")
+            self.assertEquals(1, control.process_file(file))
+
+
+    def test_process_fileAI(self):
+        control = c.Controller.get_instance()
+        with open("src/test/data/chat-gpt_generated_text.txt", 'rb') as t:
+            file = FileStorage(stream=t, filename="data/chat-gpt_generated_text.txt", content_type="text/plain")
+            self.assertEquals(0, control.process_file(file))
+        # with open("src/test/data/chat-gpt_generated_text.pdf", 'rb') as t:
+        #     file = FileStorage(stream=t, filename="data/chat-gpt_generated_text.pdf", content_type="application/pdf")
+        #     self.assertEquals(0, control.process_file(file))
+        with open("src/test/data/chat-gpt_generated_text.docx", 'rb') as t:
+            file = FileStorage(stream=t, filename="data/chat-gpt_generated_text.docx", content_type="application/vnd.openxmlformats-officedocument.wordprocessingml.document")
+            self.assertEquals(0, control.process_file(file))
+        # with open("src/test/data/chat-gpt_generated_text.doc", 'rb') as t:
+        #     file = FileStorage(stream=t, filename="data/chat-gpt_generated_text.doc", content_type="application/msword")
+        #     self.assertEquals(0, control.process_file(file))
 
 
 suite_controller = TestLoader().loadTestsFromTestCase(TestController)

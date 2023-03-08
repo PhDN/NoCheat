@@ -12,6 +12,9 @@ import JobsList from './JobsList';
 
 import './App.css';
 
+/**
+ * The root component.
+ */
 export default function App() {
     const [editing, setEditing] = useState(/** @type {number?} */ (null));
     function openEditModal(/** @type {number} */ id) {

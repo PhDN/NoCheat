@@ -13,6 +13,14 @@ import './JobItem.css';
  */
 
 /**
+ * Component for displaying a singular job in the saved jobs list.
+ * 
+ * `JobsList` must provide the following properties to this component:
+ * - `documents` - a list of documents and their associated statuses.
+ * - `id` - the job ID to track & query the status of.
+ * - `status` - the initial status of this job.
+ * - `update` - a callback to update this job's status.
+ * 
  * @param {{
  *  documents: { name: string; status: string | DocumentJobItem }[];
  *  id: string;

@@ -6,6 +6,12 @@ import Modal from './Modal';
 import './EditModal.css';
 
 /**
+ * Modal component shown when editing the contents of a plain text file.
+ * 
+ * The following properties must be provided to this component:
+ * - `id` - The document ID being edited. If < 0, is editing a new document.
+ * - `close` - Callback to close the modal.
+ * 
  * @param {{ id: number; close(): void; }} props
  */
 export default function EditModal({ close, id }) {

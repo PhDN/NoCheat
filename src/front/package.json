@@ -9,6 +9,7 @@
     "jsdoc": "^4.0.0",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
+    "react-markdown": "^8.0.5",
     "react-pdf": "^6.2.2",
     "react-scripts": "5.0.1",
     "web-vitals": "^2.1.4"
@@ -44,7 +45,7 @@
       ".+\\.(css|svg)": "jest-transform-stub"
     },
     "transformIgnorePatterns": [
-      "node_modules/(?!fetch-blob|web-encoding)"
+      "node_modules/(?!fetch-blob|web-encoding|react-markdown|vfile|unified|bail|is-plain-obj|trough|remark-parse|mdast-util-.+|micromark|decode-named-character-reference|character-entities|remark-rehype|trim-lines|unist-util-.+|property-information|hast-util-.+|.+-separated-tokens)"
     ]
   },
   "devDependencies": {

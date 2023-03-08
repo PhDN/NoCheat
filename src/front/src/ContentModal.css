@@ -1,0 +1,41 @@
+.ContentModal > div {
+    display: flex;
+    flex-direction: column;
+
+    padding: 16px;
+
+    max-width: 75vw;
+
+    height: 70%;
+
+    background: #555;
+    border-radius: 24px;
+}
+
+.ContentModal > div > .content {
+    display: block;
+    overflow: scroll;
+
+    text-align: left;
+}
+.ContentModal > div > .content :not(em):not(strong):not(code) {
+    text-align: left;
+    margin-left: 8px;
+    margin-right: 8px;
+    padding: unset;
+}
+.ContentModal > div > .content ul {
+    padding-left: 1.5em !important;
+}
+.ContentModal > div > .content h1 {
+    background: transparent;
+    color: #ccc;
+    border: none;
+}
+.ContentModal > div > .content code {
+    background: #00000050;
+    padding: 0 4px;
+    font-size: 0.9em;
+
+    border-radius: 8px;
+}

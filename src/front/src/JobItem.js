@@ -4,6 +4,15 @@ import IconButton from './IconButton';
 import './JobItem.css';
 
 /**
+ * @typedef {{
+ *  "Burstiness": number;
+ *  "Document Perplexity": number;
+ *  "Model Output": string;
+ *  "Perplexity per line": number;
+ * }} DocumentJobItem
+ */
+
+/**
  * Component for displaying a singular job in the saved jobs list.
  * 
  * `JobsList` must provide the following properties to this component:
@@ -13,7 +22,7 @@ import './JobItem.css';
  * - `update` - a callback to update this job's status.
  * 
  * @param {{
- *  documents: { name: string; status: string }[];
+ *  documents: { name: string; status: string | DocumentJobItem }[];
  *  id: string;
  *  remove(): Promise<void>;
  *  status: string;
@@ -53,7 +62,15 @@ export default function JobItem({ documents, id, remove, status, update }) {
                 } : remove} />
         </div>
         <ul>{documents.map(({ name, status }, index) =>
-            <li key={index}><em>{name}</em>{status && `: ${status}`}</li>
+            <li key={index}><em>{name}</em>: {status &&
+                typeof status == 'object'
+                ? status['Model Output']
+                : status
+            `: ${status}`}{typeof status == 'object' && <>
+                <br />
+                Perplexity: {status['Document Perplexity']}{' '}
+                (per line: {status['Perplexity per line'].toFixed(3)})
+            </>}</li>
         )}</ul>
     </div>;
 }

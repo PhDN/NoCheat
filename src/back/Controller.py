@@ -4,6 +4,7 @@ from PyPDF2 import PdfFileReader
 from src.back.model import GPT2PPL
 import docx
 import tempfile
+import json
 
 
 def parse_file(file: FileStorage) -> str:
@@ -98,4 +99,5 @@ class Controller:
         :param results: The raw result data from the model
         :return: The data in format usable by front end
         """
-        return results[0]["label"]
+        results_as_json = json.dumps(results, indent=4)
+        return results_as_json

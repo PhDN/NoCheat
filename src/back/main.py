@@ -43,7 +43,7 @@ def set_up_server(app: Union[Flask, str], static_dir: Optional[str] = None):
                 if isinstance(text, IOError):
                     results.append({ 'name': filename, 'status': str(text) })
                 else:
-                    results.append({ 'name': filename, 'status': controller.process_text(text)[1] })
+                    results.append({ 'name': filename, 'status': controller.process_text(text) })
             except Exception as e:
                 e.__traceback__
                 error = True

@@ -45,7 +45,7 @@
       ".+\\.(css|svg)": "jest-transform-stub"
     },
     "transformIgnorePatterns": [
-      "node_modules/(?!fetch-blob|web-encoding)"
+      "node_modules/(?!fetch-blob|web-encoding|react-markdown|vfile|unified|bail|is-plain-obj|trough|remark-parse|mdast-util-.+|micromark|decode-named-character-reference|character-entities|remark-rehype|trim-lines|unist-util-.+|property-information|hast-util-.+|.+-separated-tokens)"
     ]
   },
   "devDependencies": {

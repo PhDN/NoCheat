@@ -16,7 +16,9 @@ Warning: The model takes ~1-2 minute to classify a document using cpu.
 
 import argparse
 import sys
-from src.back.model import GPT2PPL
+import sys
+sys.path.append('src/back/')
+from model import GPT2PPL
 
 if __name__ == "__main__":
     parser = argparse.ArgumentParser()
@@ -36,4 +38,8 @@ if __name__ == "__main__":
     # close file
     text_file.close()
     # classify on given text file, prints output in shell
-    model(text)
+    result = model(text)
+    print("Document perplixty: ", result["Document Perplexity"])
+    print("Perplixty per line: ", result["Perplexity per line"])
+    print("Burstiness: ", result["Burstiness"])
+    print("Model Output: ", result["Model Output"])

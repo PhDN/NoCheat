@@ -66,7 +66,7 @@ export default function JobItem({ documents, id, remove, status, update }) {
                 typeof status == 'object'
                 ? status['Model Output']
                 : status
-            `: ${status}`}{typeof status == 'object' && <>
+            }{typeof status == 'object' && <>
                 <br />
                 Perplexity: {status['Document Perplexity']}{' '}
                 (per line: {status['Perplexity per line'].toFixed(3)})

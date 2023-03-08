@@ -17,7 +17,7 @@ Finish release features and address peer review criticism.
 I need to update the documentation based on the recommendations from the Peer Reviews, as well as improving backend testing and polishing what we currently have for the final release.
 
 #### Progress
-I made some of the documentation updates from the peer reviews, got backend testing working, updated the Living Doc to reflect our current status as of 3/7, reviewed pull requests, and made some fixes to the build to help with usability.
+I made some of the documentation updates from the peer reviews, got backend testing working, updated the Living Doc to reflect our current status as of 3/7, reviewed pull requests, and made some fixes to the build to help with usability. I also ended up creating the logo for the project.
 #### New Goals
 
 

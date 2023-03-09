@@ -37,9 +37,12 @@ I made some of the documentation updates from the peer reviews, got backend test
     - Help finish FAQ and usage guide on front end
     - Wrap up the project for final release.
 #### Progress
-
+    - Finished integration to display output metrics on the front end
+    - Finished FAQ and usage instruction guide on front end
+    - Added to code documentation for the model
+    - Wrapped up the final project presentation
 #### New Goals
-
+    - N/A
 
 ### Simon Struthers
 
